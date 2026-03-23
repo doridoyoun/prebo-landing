@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PREBO - Future-Tech Agency</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --brand-blue: #3b6cff;
+            --brand-navy: #1a2b4b;
+            --brand-purple: #9d50bb;
+            --bg-dark: #fdfdfb;
+            --text-main: #1a2b4b;
+            --text-muted: rgba(26, 43, 75, 0.78);
+            --card-glass-bg: rgba(255, 255, 255, 0.4);
+            --card-glass-blur: 24px;
+            --card-border-idle: rgba(0, 0, 0, 0.05);
+            --card-border-hover: rgba(59, 108, 255, 0.36);
+            --card-bg-hover: rgba(255, 255, 255, 0.58);
+            --card-soft-shadow: 0 10px 32px rgba(0, 0, 0, 0.02), 0 18px 52px rgba(59, 108, 255, 0.02);
+            --card-shadow-hover: 0 0 0 1px rgba(59, 108, 255, 0.2), 0 14px 36px rgba(0, 0, 0, 0.04),
+                0 0 48px rgba(59, 108, 255, 0.06);
+        }
+        body {
+            background-color: var(--bg-dark);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            margin: 0;
+            overflow-x: hidden;
+            word-break: keep-all;
+            position: relative;
+            isolation: isolate;
+        }
+        /* Airy mesh 배경 이미지: 고정 레이어(콘텐츠는 z-index: 1) */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            background-image: url('bg-mesh-airy.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            z-index: -1;
+            pointer-events: none;
+        }
+        body > *:not(script) {
+            position: relative;
+            z-index: 1;
+        }
+        .section-title,
+        section h2.hero-title {
+            color: #1a2b4b;
+            font-weight: 800;
+        }
+        h1.hero-title {
+            color: #1a2b4b;
+        }
+        .hero-title {
+            font-weight: 800;
+        }
+        h3 {
+            font-weight: 700;
+        }
+        p {
+            font-weight: 500;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: var(--card-soft-shadow);
+        }
+        .glass-card {
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease,
+                border-color 0.4s ease, opacity 0.55s ease;
+        }
+        /* 스크롤 등장(AOS) — 초기 상태 */
+        .aos-card {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .aos-card.aos-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .flow-step-card[data-select-group] {
+            border-radius: 14px;
+            background: var(--card-glass-bg);
+            backdrop-filter: blur(var(--card-glass-blur));
+            -webkit-backdrop-filter: blur(var(--card-glass-blur));
+            border: 1px solid var(--card-border-idle);
+            box-shadow: var(--card-soft-shadow);
+            transition: all 0.5s ease;
+        }
+        .flow-step-card[data-select-group]:hover,
+        .flow-step-card[data-select-group].active-focus {
+            border-color: var(--card-border-hover);
+            background: var(--card-bg-hover);
+            backdrop-filter: blur(var(--card-glass-blur));
+            -webkit-backdrop-filter: blur(var(--card-glass-blur));
+            box-shadow: var(--card-shadow-hover);
+            transform: translateY(-3px);
+            z-index: 1;
+            position: relative;
+        }
+        .flow-step-card[data-select-group="influencer"] h3 {
+            color: #1a2b4b;
+            font-weight: 800;
+            transition: color 0.5s ease;
+        }
+        .flow-step-card[data-select-group="influencer"] p {
+            color: var(--text-muted);
+            transition: color 0.5s ease;
+        }
+        .flow-step-card[data-influencer-variant="selection"],
+        .flow-step-card[data-influencer-variant="performance"] {
+            background: rgba(255, 255, 255, 0.42);
+            backdrop-filter: blur(var(--card-glass-blur));
+            -webkit-backdrop-filter: blur(var(--card-glass-blur));
+            border-color: var(--card-border-idle);
+            box-shadow: var(--card-soft-shadow);
+        }
+        .flow-step-card[data-influencer-variant="selection"] h3 svg {
+            color: #3b6cff;
+            stroke: #3b6cff;
+            filter: none;
+        }
+        .flow-step-card[data-influencer-variant="performance"] h3 svg {
+            color: #3b6cff;
+            stroke: #3b6cff;
+            filter: none;
+        }
+        .flow-step-card[data-influencer-variant="selection"]:hover,
+        .flow-step-card[data-influencer-variant="selection"].active-focus,
+        .flow-step-card[data-influencer-variant="performance"]:hover,
+        .flow-step-card[data-influencer-variant="performance"].active-focus {
+            border-color: rgba(59, 108, 255, 0.4);
+            background: rgba(255, 255, 255, 0.62);
+            box-shadow:
+                0 0 0 1px rgba(59, 108, 255, 0.2),
+                0 14px 40px rgba(0, 0, 0, 0.03),
+                0 0 44px rgba(59, 108, 255, 0.07);
+        }
+        .flow-step-card[data-influencer-variant="selection"]:hover p,
+        .flow-step-card[data-influencer-variant="selection"].active-focus p,
+        .flow-step-card[data-influencer-variant="performance"]:hover p,
+        .flow-step-card[data-influencer-variant="performance"].active-focus p {
+            color: var(--text-muted);
+        }
+        @media (hover: hover) and (pointer: fine) {
+            .flow-step-card[data-influencer-variant="selection"]:hover,
+            .flow-step-card[data-influencer-variant="performance"]:hover {
+                border-color: rgba(59, 108, 255, 0.5);
+            }
+        }
+        .selection-step-card.flow-step-card .step-label {
+            color: rgba(26, 43, 75, 0.52);
+            text-shadow: none;
+            transition: all 0.5s ease;
+        }
+        .selection-step-card.flow-step-card .step-icon {
+            color: rgba(26, 43, 75, 0.52);
+            filter: none;
+            transition: all 0.5s ease;
+        }
+        .selection-step-card.flow-step-card .step-icon svg {
+            transition: all 0.5s ease;
+        }
+        .selection-step-card.flow-step-card:hover .step-label,
+        .selection-step-card.flow-step-card.active-focus .step-label {
+            color: #1a2b4b;
+            text-shadow: none;
+        }
+        .selection-step-card.flow-step-card:hover .step-icon,
+        .selection-step-card.flow-step-card.active-focus .step-icon {
+            color: #1a2b4b;
+            filter: none;
+        }
+        @media (hover: hover) and (pointer: fine) {
+            .flow-step-card[data-select-group]:hover:not([data-influencer-variant]) {
+                border-color: rgba(59, 108, 255, 0.28);
+            }
+            .flow-step-card[data-select-group].active-focus:not(:hover):not([data-influencer-variant]) {
+                border-color: var(--card-border-hover);
+            }
+        }
+        .flow-step-card[data-select-group]:focus-visible {
+            outline: 2px solid rgba(59, 108, 255, 0.35);
+            outline-offset: 2px;
+            transition: outline-color 0.5s ease;
+        }
+        @media (hover: hover) and (pointer: fine) {
+            .glass-card:hover:not(.active-focus):not(.flow-step-card):not(.case-study-card) {
+                transform: translateY(-6px);
+                box-shadow: 0 18px 48px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.04),
+                    0 14px 44px rgba(59, 108, 255, 0.04);
+            }
+        }
+        /* 실제 진행 사례: 호버 없음, 스크롤 중앙 포커스만 */
+        .case-study-card[data-case-scroll-focus] {
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease,
+                background-color 0.35s ease;
+        }
+        .case-study-card.case-portfolio {
+            padding: 0;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: var(--card-soft-shadow);
+        }
+        .case-study-card.case-portfolio.active-focus {
+            transform: scale(1.02);
+            border-color: rgba(59, 108, 255, 0.3);
+            box-shadow: 0 0 0 1px rgba(59, 108, 255, 0.12), 0 16px 44px rgba(0, 0, 0, 0.04),
+                0 0 48px rgba(59, 108, 255, 0.06);
+            background-color: rgba(255, 255, 255, 0.55);
+            z-index: 2;
+            position: relative;
+        }
+        .text-gradient {
+            background: linear-gradient(105deg, #3b6cff 0%, #5b8cff 40%, #1a2b4b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .bg-gradient-brand {
+            background: linear-gradient(125deg, #3b6cff 0%, #2f5ce0 45%, #1a2b4b 100%);
+        }
+        /* 문의 CTA: 에어리 메쉬와 조화되는 블루 그레이 버튼 */
+        .btn-inquiry-gradient {
+            color: #3b6cff;
+            background: rgba(59, 108, 255, 0.04);
+            border: 1px solid #3b6cff;
+            box-shadow: 0 10px 28px rgba(59, 108, 255, 0.08), 0 6px 18px rgba(0, 0, 0, 0.03);
+        }
+        .btn-inquiry-gradient:hover {
+            background: rgba(59, 108, 255, 0.07);
+            border-color: #3b6cff;
+            box-shadow: 0 12px 30px rgba(59, 108, 255, 0.1), 0 8px 20px rgba(0, 0, 0, 0.035);
+        }
+
+        /* 모바일 최적화 강제 교정 */
+        @media (max-width: 640px) {
+            .hero-title { font-size: 1.875rem !important; line-height: 1.3 !important; }
+            .section-padding { padding: 88px 22px !important; }
+            .py-24 { padding-top: 8rem !important; padding-bottom: 8rem !important; }
+            .py-40 { padding-top: 11.5rem !important; padding-bottom: 11.5rem !important; }
+            .space-y-32 > * + * { margin-top: 7rem !important; }
+            .mobile-grid { grid-template-columns: 1fr !important; }
+            /* 카드 테두리 가시성 (플로우 카드는 --card-border-idle 유지) */
+            .glass.glass-card:not(.flow-step-card) {
+                border-color: rgba(0, 0, 0, 0.07);
+            }
+            .glass.glass-card:active:not(.active-focus):not(.case-study-card):not(.selection-step-card) {
+                transform: scale(0.97);
+                border-color: #3b6cff;
+                box-shadow: 0 0 0 1px rgba(59, 108, 255, 0.3), 0 14px 36px rgba(0, 0, 0, 0.04);
+                transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+            }
+            .glass-card.flow-step-card[data-select-group]:active:not(.active-focus) {
+                transform: translateY(-2px);
+                border-color: var(--card-border-hover);
+                background: var(--card-bg-hover);
+                backdrop-filter: blur(var(--card-glass-blur));
+                -webkit-backdrop-filter: blur(var(--card-glass-blur));
+                box-shadow: var(--card-shadow-hover);
+                transition: all 0.5s ease;
+            }
+            .glass-card.flow-step-card[data-influencer-variant="selection"]:active:not(.active-focus),
+            .glass-card.flow-step-card[data-influencer-variant="performance"]:active:not(.active-focus) {
+                border-color: rgba(59, 108, 255, 0.42);
+                background: rgba(255, 255, 255, 0.62);
+                backdrop-filter: blur(var(--card-glass-blur));
+                -webkit-backdrop-filter: blur(var(--card-glass-blur));
+                box-shadow:
+                    0 0 0 1px rgba(59, 108, 255, 0.18),
+                    0 14px 40px rgba(0, 0, 0, 0.03),
+                    0 0 44px rgba(59, 108, 255, 0.06);
+            }
+            .glass-card.flow-step-card[data-select-group]:active:not(.active-focus) .step-label,
+            .glass-card.flow-step-card[data-select-group]:active:not(.active-focus) .step-icon {
+                color: var(--text-main);
+                text-shadow: none;
+                filter: none;
+            }
+            .glass-card.flow-step-card[data-select-group="influencer"]:active:not(.active-focus) p {
+                color: var(--text-muted);
+            }
+            .glass-card.flow-step-card[data-select-group].active-focus:active:not([data-influencer-variant]) {
+                transform: translateY(-2px);
+                border-color: var(--card-border-hover);
+                background: var(--card-bg-hover);
+                backdrop-filter: blur(var(--card-glass-blur));
+                -webkit-backdrop-filter: blur(var(--card-glass-blur));
+                box-shadow: var(--card-shadow-hover);
+                transition: all 0.5s ease;
+            }
+            .glass-card.flow-step-card[data-influencer-variant="selection"].active-focus:active,
+            .glass-card.flow-step-card[data-influencer-variant="performance"].active-focus:active {
+                transform: translateY(-2px);
+                border-color: rgba(59, 108, 255, 0.42);
+                background: rgba(255, 255, 255, 0.62);
+                backdrop-filter: blur(var(--card-glass-blur));
+                -webkit-backdrop-filter: blur(var(--card-glass-blur));
+                box-shadow:
+                    0 0 0 1px rgba(59, 108, 255, 0.18),
+                    0 14px 40px rgba(0, 0, 0, 0.03),
+                    0 0 44px rgba(59, 108, 255, 0.06);
+            }
+            .glass-card.flow-step-card[data-select-group].active-focus:active .step-label,
+            .glass-card.flow-step-card[data-select-group].active-focus:active .step-icon {
+                color: var(--text-main);
+                filter: none;
+            }
+            .glass-card.flow-step-card[data-select-group="influencer"].active-focus:active p {
+                color: var(--text-muted);
+            }
+            .glass.glass-card.active-focus:active:not(.selection-step-card) {
+                transform: scale(1.02);
+                border-color: #3b6cff;
+                transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="fixed top-0 left-0 right-0 z-50 px-6 py-5 glass text-[#1A2B4B]">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="text-xl font-extrabold tracking-tighter text-[#1A2B4B]">PREBO</div>
+            <button class="px-5 py-2 glass rounded-full text-xs font-medium text-[#1A2B4B]">Contact</button>
+        </div>
+    </nav>
+
+    <section class="relative min-h-[90vh] flex flex-col items-center justify-center section-padding text-center pt-24 overflow-hidden">
+        <div class="z-10 px-4">
+            <span class="inline-block px-4 py-1.5 rounded-full border border-black/[0.08] bg-white/80 text-[10px] font-medium tracking-wider text-[#1A2B4B]/85 mb-8 uppercase shadow-sm">IT & Game Industry Specialist</span>
+            <h1 class="hero-title text-4xl md:text-7xl font-extrabold mb-8 tracking-tight text-[#1A2B4B]">비즈니스 성과를 만드는<br><span class="text-gradient">실행 최적화 파트너</span></h1>
+            <p class="text-sm md:text-xl text-[#1A2B4B]/85 mb-12 max-w-2xl mx-auto font-normal leading-relaxed">기획부터 실행, 결과까지 모든 과정을 데이터 기반으로 최적화합니다.</p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button type="button" class="btn-inquiry-gradient w-full sm:w-auto px-12 py-5 rounded-full font-bold active:scale-95 transition-all">문의하기</button>
+            </div>
+            <div class="mt-10 flex flex-col items-center justify-center text-neutral-400 animate-bounce select-none">
+                <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                <span class="mt-1 text-[10px] tracking-[0.25em] uppercase">Scroll</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding max-w-7xl mx-auto py-24 md:py-28 px-6 text-left">
+        <h2 class="section-title section-title-display text-3xl md:text-4xl font-extrabold tracking-tight mb-3 text-[#1A2B4B]">비즈니스 실행을 위한 핵심 영역</h2>
+        <p class="text-sm md:text-base text-[#1A2B4B]/85 mb-12 max-w-2xl leading-relaxed">각 분야의 전문가들이 최상의 성과를 위해 유기적으로 협업합니다.</p>
+        <div class="grid md:grid-cols-2 gap-8 mobile-grid text-left">
+            <div class="glass glass-card aos-card rounded-2xl p-10">
+                <i data-lucide="layers" class="text-[#3B6CFF] mb-6 w-8 h-8"></i>
+                <h3 class="text-2xl font-extrabold mb-4 text-[#1A2B4B]">Event Operation</h3>
+                <p class="text-sm text-[#1A2B4B]/85 mb-8 leading-relaxed">브랜드 경험을 기획부터 실행까지 통합 운영합니다. 단순한 행사를 넘어 가치를 설계합니다.</p>
+                <div class="flex flex-wrap gap-2 items-center">
+                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">기획</span>
+                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">섭외</span>
+                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">소싱</span>
+                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">실행</span>
+                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">결과</span>
+                </div>
+            </div>
+            <div class="glass glass-card aos-card rounded-2xl p-10">
+                <i data-lucide="zap" class="text-[#3B6CFF] mb-6 w-8 h-8"></i>
+                <h3 class="text-2xl font-extrabold mb-4 text-[#1A2B4B]">PR & Media</h3>
+                <p class="text-sm text-[#1A2B4B]/85 mb-8 leading-relaxed">언론과 뉴미디어를 연결해 메시지가 퍼지는 구조를 설계합니다. 효과적인 도달을 목표로 합니다.</p>
+                <div class="flex flex-wrap gap-2 items-center">
+                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">보도자료</span>
+                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">기획기사</span>
+                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">위기대응</span>
+                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">인플루언서 마케팅</span>
+                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">공동구매</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-28 px-6">
+        <div class="max-w-7xl mx-auto text-left">
+            <h2 class="section-title text-3xl md:text-4xl font-extrabold tracking-tight mb-8 text-[#1A2B4B]">필요한 단계만 선택</h2>
+            <p class="text-sm md:text-base text-[#1A2B4B]/85 mb-16 max-w-2xl leading-relaxed">전체를 맡길 수도, 특정 단계만 선택할 수도 있습니다.<br>유연한 파트너십을 지향합니다.</p>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 overflow-visible py-1">
+                <div class="glass glass-card flow-step-card aos-card selection-step-card flex flex-col items-center justify-center gap-3 min-h-[108px] sm:min-h-[122px] md:min-h-[126px] px-6 py-10 md:py-11 cursor-pointer rounded-[14px] active-focus" data-select-group="selection-flow" role="button" tabindex="0"><i data-lucide="layers" class="step-icon w-6 h-6 sm:w-7 sm:h-7 shrink-0" stroke-width="1.75"></i><span class="step-label text-xl sm:text-2xl font-bold tracking-tight text-center leading-snug">기획</span></div>
+                <div class="glass glass-card flow-step-card aos-card selection-step-card flex flex-col items-center justify-center gap-3 min-h-[108px] sm:min-h-[122px] md:min-h-[126px] px-6 py-10 md:py-11 cursor-pointer rounded-[14px]" data-select-group="selection-flow" role="button" tabindex="0"><i data-lucide="users" class="step-icon w-6 h-6 sm:w-7 sm:h-7 shrink-0" stroke-width="1.75"></i><span class="step-label text-xl sm:text-2xl font-bold tracking-tight text-center leading-snug">섭외</span></div>
+                <div class="glass glass-card flow-step-card aos-card selection-step-card flex flex-col items-center justify-center gap-3 min-h-[108px] sm:min-h-[122px] md:min-h-[126px] px-6 py-10 md:py-11 cursor-pointer rounded-[14px]" data-select-group="selection-flow" role="button" tabindex="0"><i data-lucide="target" class="step-icon w-6 h-6 sm:w-7 sm:h-7 shrink-0" stroke-width="1.75"></i><span class="step-label text-xl sm:text-2xl font-bold tracking-tight text-center leading-snug">소싱</span></div>
+                <div class="glass glass-card flow-step-card aos-card selection-step-card flex flex-col items-center justify-center gap-3 min-h-[108px] sm:min-h-[122px] md:min-h-[126px] px-6 py-10 md:py-11 cursor-pointer rounded-[14px]" data-select-group="selection-flow" role="button" tabindex="0"><i data-lucide="zap" class="step-icon w-6 h-6 sm:w-7 sm:h-7 shrink-0" stroke-width="1.75"></i><span class="step-label text-xl sm:text-2xl font-bold tracking-tight text-center leading-snug">실행</span></div>
+                <div class="glass glass-card flow-step-card aos-card selection-step-card flex flex-col items-center justify-center gap-3 min-h-[108px] sm:min-h-[122px] md:min-h-[126px] px-6 py-10 md:py-11 cursor-pointer rounded-[14px]" data-select-group="selection-flow" role="button" tabindex="0"><i data-lucide="bar-chart-3" class="step-icon w-6 h-6 sm:w-7 sm:h-7 shrink-0" stroke-width="1.75"></i><span class="step-label text-xl sm:text-2xl font-bold tracking-tight text-center leading-snug">결과</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-28 px-6 max-w-7xl mx-auto text-left">
+        <div class="w-full md:max-w-6xl md:mx-auto">
+            <div class="mb-12">
+                <h2 class="section-title text-3xl md:text-4xl font-extrabold tracking-tight mb-6 text-[#1A2B4B]">Influencer Marketing</h2>
+                <p class="text-sm md:text-base text-[#1A2B4B]/85 mb-10 leading-relaxed max-w-2xl">브랜드 페르소나와 일치하는 인플루언서를 매칭합니다.<br>단순 노출을 넘어 전환을 목표로 합니다.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 overflow-visible py-1">
+            <div class="glass glass-card flow-step-card aos-card p-8 md:p-12 cursor-pointer active-focus text-left" data-select-group="influencer" data-influencer-variant="selection" role="button" tabindex="0">
+                <h3 class="font-extrabold mb-2 md:text-2xl flex items-center gap-2">
+                    <i data-lucide="check-circle" class="w-5 h-5 shrink-0" stroke-width="1.75"></i>
+                    Option 1: Selection
+                </h3>
+                <p class="text-xs md:text-base leading-relaxed text-[#1A2B4B]/85">PREBO의 큐레이션 리스트에서 브랜드 페르소나와 일치하는 인플루언서를 직접 선택합니다.</p>
+            </div>
+            <div class="glass glass-card flow-step-card aos-card p-8 md:p-12 cursor-pointer text-left" data-select-group="influencer" data-influencer-variant="performance" role="button" tabindex="0">
+                <h3 class="font-extrabold mb-2 md:text-2xl flex items-center gap-2">
+                    <i data-lucide="check-circle" class="w-5 h-5 shrink-0" stroke-width="1.75"></i>
+                    Option 2: Performance
+                </h3>
+                <p class="text-xs md:text-base leading-relaxed text-[#1A2B4B]/85">목표 노출 수치 도달을 최우선으로 하여 성과를 보장하는 운영 방식을 제안합니다.</p>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <section class="py-28 w-full overflow-hidden px-4 md:px-0">
+        <div class="w-full md:px-6 md:max-w-5xl md:mx-auto flex flex-col items-center space-y-24 md:space-y-36">
+            <div class="w-full max-w-xl md:max-w-2xl mr-auto text-left flex flex-col pl-4 md:pl-0">
+                <h2 class="section-title section-title-display text-3xl md:text-5xl font-extrabold tracking-tight mb-5 break-keep text-[#1A2B4B]"><span class="block">우리는 <span class="text-[#3B6CFF]">‘소싱’</span>에서</span><span class="block">차이를 만듭니다</span></h2>
+                <div class="space-y-[1px]">
+                    <p class="text-sm md:text-xl text-[#1A2B4B]/85 leading-relaxed md:leading-relaxed">굿즈 제작부터 유통까지 전 과정을 다이렉트로 연결하여</p>
+                    <p class="text-sm md:text-xl text-[#1A2B4B]/85 leading-relaxed md:leading-relaxed">퀄리티와 비용 효율을 동시에 잡습니다.</p>
+                </div>
+            </div>
+            <div class="w-full max-w-xl md:max-w-2xl ml-auto text-right flex flex-col pr-4 md:pr-0">
+                <h2 class="section-title section-title-display text-3xl md:text-5xl font-extrabold tracking-tight mb-5 break-keep text-[#1A2B4B]"><span class="block">우리는 <span class="text-[#3B6CFF]">‘연결’</span>에서</span><span class="block">차이를 만듭니다</span></h2>
+                <div class="space-y-[1px]">
+                    <p class="text-sm md:text-xl text-[#1A2B4B]/85 leading-relaxed md:leading-relaxed">현직 아나운서 및 언론·뉴미디어 전문가의 시각으로</p>
+                    <p class="text-sm md:text-xl text-[#1A2B4B]/85 leading-relaxed md:leading-relaxed">브랜드에 가장 적합한 매체와 채널을 정교하게 매칭합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 md:py-28 px-6 max-w-7xl mx-auto text-left" id="case-studies-section">
+        <h2 class="section-title section-title-display text-3xl md:text-4xl font-extrabold tracking-tight mb-3 text-[#1A2B4B]">실제 진행 사례</h2>
+        <p class="text-sm md:text-base text-[#1A2B4B]/85 mb-10 md:mb-12 max-w-2xl leading-relaxed">브랜드와 함께한 실행 결과를 이미지로 만나보세요.</p>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mobile-grid overflow-visible py-1 text-left">
+            <article class="glass-card aos-card case-study-card case-portfolio flex flex-col sm:flex-row rounded-xl" data-case-scroll-focus>
+                <div class="case-study-visual relative w-full sm:w-[44%] sm:min-w-[44%] aspect-[16/10] sm:aspect-auto sm:self-stretch sm:min-h-[168px] overflow-hidden">
+                    <img src="https://picsum.photos/seed/prebo-nexon-game/640/400" alt="게임 런칭 비주얼 플레이스홀더" class="absolute inset-0 w-full h-full object-cover" width="640" height="400" loading="lazy" decoding="async">
+                </div>
+                <div class="flex flex-col justify-center flex-1 gap-3 p-5 sm:p-6 sm:pl-5">
+                    <h4 class="text-[10px] text-[#1A2B4B]/85 uppercase tracking-[0.2em] font-medium">Nexon</h4>
+                    <h3 class="text-base md:text-lg font-extrabold text-[#1A2B4B] leading-snug tracking-tight">Global Game Launch</h3>
+                    <p class="text-[11px] text-[#1A2B4B]/85 leading-relaxed line-clamp-2">글로벌 게임 출시 캠페인 — 도달과 인지도를 동시에 확장했습니다.</p>
+                    <div class="text-[10px] font-semibold uppercase tracking-wider text-[#3B6CFF] pt-1">Result: Reach 1M+</div>
+                </div>
+            </article>
+            <article class="glass-card aos-card case-study-card case-portfolio flex flex-col sm:flex-row rounded-xl" data-case-scroll-focus>
+                <div class="case-study-visual relative w-full sm:w-[44%] sm:min-w-[44%] aspect-[16/10] sm:aspect-auto sm:self-stretch sm:min-h-[168px] overflow-hidden">
+                    <img src="https://picsum.photos/seed/prebo-samsung-tech/640/400" alt="테크 브랜드 비주얼 플레이스홀더" class="absolute inset-0 w-full h-full object-cover" width="640" height="400" loading="lazy" decoding="async">
+                </div>
+                <div class="flex flex-col justify-center flex-1 gap-3 p-5 sm:p-6 sm:pl-5">
+                    <h4 class="text-[10px] text-[#1A2B4B]/85 uppercase tracking-[0.2em] font-medium">Samsung</h4>
+                    <h3 class="text-base md:text-lg font-extrabold text-[#1A2B4B] leading-snug tracking-tight">Tech Brand PR</h3>
+                    <p class="text-[11px] text-[#1A2B4B]/85 leading-relaxed line-clamp-2">테크 브랜드 메시지를 언론·뉴미디어에 정교하게 심었습니다.</p>
+                    <div class="text-[10px] font-semibold uppercase tracking-wider text-[#3B6CFF] pt-1">Result: 100+ Articles</div>
+                </div>
+            </article>
+            <article class="glass-card aos-card case-study-card case-portfolio flex flex-col sm:flex-row rounded-xl" data-case-scroll-focus>
+                <div class="case-study-visual relative w-full sm:w-[44%] sm:min-w-[44%] aspect-[16/10] sm:aspect-auto sm:self-stretch sm:min-h-[168px] overflow-hidden">
+                    <img src="https://picsum.photos/seed/prebo-kakao-studio/640/400" alt="게임사 포트폴리오 플레이스홀더" class="absolute inset-0 w-full h-full object-cover" width="640" height="400" loading="lazy" decoding="async">
+                </div>
+                <div class="flex flex-col justify-center flex-1 gap-3 p-5 sm:p-6 sm:pl-5">
+                    <h4 class="text-[10px] text-[#1A2B4B]/85 uppercase tracking-[0.2em] font-medium">Kakao Games</h4>
+                    <h3 class="text-base md:text-lg font-extrabold text-[#1A2B4B] leading-snug tracking-tight">Talent Sourcing</h3>
+                    <p class="text-[11px] text-[#1A2B4B]/85 leading-relaxed line-clamp-2">인재·파트너 소싱으로 실행 효율과 퀄리티를 끌어올렸습니다.</p>
+                    <div class="text-[10px] font-semibold uppercase tracking-wider text-[#3B6CFF] pt-1">Result: ROI 300%</div>
+                </div>
+            </article>
+            <article class="glass-card aos-card case-study-card case-portfolio flex flex-col sm:flex-row rounded-xl" data-case-scroll-focus>
+                <div class="case-study-visual relative w-full sm:w-[44%] sm:min-w-[44%] aspect-[16/10] sm:aspect-auto sm:self-stretch sm:min-h-[168px] overflow-hidden">
+                    <img src="https://picsum.photos/seed/prebo-t1-esports/640/400" alt="e스포츠 이벤트 비주얼 플레이스홀더" class="absolute inset-0 w-full h-full object-cover" width="640" height="400" loading="lazy" decoding="async">
+                </div>
+                <div class="flex flex-col justify-center flex-1 gap-3 p-5 sm:p-6 sm:pl-5">
+                    <h4 class="text-[10px] text-[#1A2B4B]/85 uppercase tracking-[0.2em] font-medium">T1</h4>
+                    <h3 class="text-base md:text-lg font-extrabold text-[#1A2B4B] leading-snug tracking-tight">E-sports Champ</h3>
+                    <p class="text-[11px] text-[#1A2B4B]/85 leading-relaxed line-clamp-2">대회·굿즈까지 한 흐름으로 연결한 현장 실행 사례입니다.</p>
+                    <div class="text-[10px] font-semibold uppercase tracking-wider text-[#3B6CFF] pt-1">Result: Sold Out</div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="py-28 px-6 max-w-4xl mx-auto">
+        <div class="glass glass-card aos-card rounded-2xl p-10 md:p-16">
+            <h2 class="section-title text-3xl font-extrabold mb-10 text-[#1A2B4B]">대표 약력</h2>
+            <ul class="space-y-6">
+                <li class="flex items-start gap-5"><div class="mt-2 w-2 h-2 rounded-full bg-[#3B6CFF] flex-shrink-0"></div><span class="text-base md:text-xl text-[#1A2B4B]">방송 아나운서 (2011~현재)</span></li>
+                <li class="flex items-start gap-5"><div class="mt-2 w-2 h-2 rounded-full bg-[#3B6CFF] flex-shrink-0"></div><span class="text-base md:text-xl text-[#1A2B4B]">현 오산대학교 e스포츠과 겸임교수</span></li>
+                <li class="flex items-start gap-5"><div class="mt-2 w-2 h-2 rounded-full bg-[#3B6CFF] flex-shrink-0"></div><span class="text-base md:text-xl text-[#1A2B4B]">게임특별위원회 위원</span></li>
+                <li class="flex items-start gap-5"><div class="mt-2 w-2 h-2 rounded-full bg-[#3B6CFF] flex-shrink-0"></div><span class="text-base md:text-xl text-[#1A2B4B]">IT, 게임사 미래전략/뉴미디어 실장 역임</span></li>
+                <li class="flex items-start gap-5"><div class="mt-2 w-2 h-2 rounded-full bg-[#3B6CFF] flex-shrink-0"></div><span class="text-base md:text-xl text-[#1A2B4B]">'지금 당장 라이브커머스 시작하라' 공저</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="py-44 px-6 text-center">
+        <h2 class="hero-title text-3xl md:text-6xl font-extrabold mb-10 break-keep text-[#1A2B4B]">가장 효율적인 방식으로<br>비즈니스를 실행하세요</h2>
+        <button type="button" class="btn-inquiry-gradient px-12 py-5 rounded-full font-bold active:scale-95 transition-all">지금 문의하기</button>
+    </section>
+
+    <footer class="py-12 px-6 border-t border-black/[0.06] text-center">
+        <p class="text-[9px] text-[#1A2B4B]/55 uppercase tracking-[0.3em]">© 2026 PREBO. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        (function () {
+            var aosCards = document.querySelectorAll('.aos-card');
+            var aosObserver = new IntersectionObserver(
+                function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('aos-visible');
+                            aosObserver.unobserve(entry.target);
+                        }
+                    });
+                },
+                { root: null, threshold: 0.1, rootMargin: '0px 0px -6% 0px' }
+            );
+            aosCards.forEach(function (el) {
+                aosObserver.observe(el);
+            });
+
+            function initSelectGroup(groupName) {
+                var cards = document.querySelectorAll('[data-select-group="' + groupName + '"]');
+                if (!cards.length) return;
+                cards.forEach(function (card) {
+                    card.addEventListener('click', function () {
+                        cards.forEach(function (c) {
+                            c.classList.remove('active-focus');
+                        });
+                        card.classList.add('active-focus');
+                    });
+                    card.addEventListener('keydown', function (e) {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            card.click();
+                        }
+                    });
+                });
+                cards.forEach(function (c, i) {
+                    c.classList.toggle('active-focus', i === 0);
+                });
+            }
+            initSelectGroup('selection-flow');
+            initSelectGroup('influencer');
+
+            var caseStudyCards = document.querySelectorAll('[data-case-scroll-focus]');
+            var caseStudyRoot = document.getElementById('case-studies-section');
+            var caseZoneActive = false;
+            var caseRafId = 0;
+
+            function updateCaseStudyCenterFocus() {
+                if (!caseZoneActive || !caseStudyCards.length) return;
+                var centerY = window.innerHeight / 2;
+                var best = null;
+                var bestDist = Infinity;
+                caseStudyCards.forEach(function (card) {
+                    var r = card.getBoundingClientRect();
+                    if (r.bottom < 0 || r.top > window.innerHeight) return;
+                    var cy = r.top + r.height / 2;
+                    var d = Math.abs(cy - centerY);
+                    if (d < bestDist) {
+                        bestDist = d;
+                        best = card;
+                    }
+                });
+                caseStudyCards.forEach(function (card) {
+                    card.classList.toggle('active-focus', card === best);
+                });
+            }
+
+            function scheduleCaseStudyFocus() {
+                if (!caseZoneActive) return;
+                cancelAnimationFrame(caseRafId);
+                caseRafId = requestAnimationFrame(updateCaseStudyCenterFocus);
+            }
+
+            if (caseStudyRoot && caseStudyCards.length) {
+                var caseZoneObserver = new IntersectionObserver(
+                    function (entries) {
+                        var e = entries[0];
+                        caseZoneActive = e && e.isIntersecting;
+                        if (!caseZoneActive) {
+                            caseStudyCards.forEach(function (c) {
+                                c.classList.remove('active-focus');
+                            });
+                        } else {
+                            scheduleCaseStudyFocus();
+                        }
+                    },
+                    { root: null, threshold: 0, rootMargin: '8% 0px 8% 0px' }
+                );
+                caseZoneObserver.observe(caseStudyRoot);
+
+                var caseThresholds = [];
+                var ct = 0;
+                while (ct <= 1) {
+                    caseThresholds.push(Math.round(ct * 100) / 100);
+                    ct += 0.05;
+                }
+                var caseCardObserver = new IntersectionObserver(
+                    function () {
+                        if (!caseZoneActive) return;
+                        scheduleCaseStudyFocus();
+                    },
+                    { root: null, threshold: caseThresholds }
+                );
+                caseStudyCards.forEach(function (card) {
+                    caseCardObserver.observe(card);
+                });
+
+                window.addEventListener('scroll', scheduleCaseStudyFocus, { passive: true });
+                window.addEventListener('resize', scheduleCaseStudyFocus, { passive: true });
+                scheduleCaseStudyFocus();
+            }
+        })();
+    </script>
+</body>
+</html>
