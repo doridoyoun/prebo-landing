@@ -32,7 +32,7 @@
                 --section-intro-stack-gap: 1.75rem;
             }
             .section-intro .section-eyebrow {
-                font-size: 0.8125rem;
+                font-size: 1.03rem;
                 letter-spacing: 0.12em;
             }
         }
@@ -61,7 +61,7 @@
             background-size: cover;
             z-index: -1;
             pointer-events: none;
-            opacity: 0.4;
+            opacity: 0.6;
         }
         body > *:not(script) {
             position: relative;
@@ -76,8 +76,8 @@
             color: #3b6cff;
             font-family: 'Noto Sans KR', 'Inter', system-ui, sans-serif;
             font-weight: 600;
-            font-size: 0.75rem;
-            line-height: 1.55;
+            font-size: 1.0625rem;
+            line-height: 1.65;
             letter-spacing: 0.14em;
             text-transform: uppercase;
             margin: 0 0 var(--section-intro-stack-gap) 0;
@@ -94,18 +94,104 @@
             margin-top: var(--section-intro-stack-gap);
         }
         .hero-content-balance {
-            padding-top: 1.5rem;
+            padding-top: 10rem;
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
+            transform: translateY(48px);
+        }
+        @media (min-width: 768px) {
+            .hero-content-balance {
+                padding-top: clamp(8rem, 10vw, 12rem);
+                max-width: 720px;
+                margin-left: auto;
+                margin-right: auto;
+                transform: none;
+            }
+        }
+        .hero-lower-actions {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-top: clamp(48px, 5vw, 64px);
+        }
+        .hero-logo {
+            display: block;
+            width: 275px;
+            max-width: 80%;
+            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: clamp(48px, 5vw, 64px);
+        }
+        @media (min-width: 768px) {
+            .hero-logo {
+                width: clamp(340px, 24vw, 460px);
+                max-width: 42vw;
+                margin-bottom: clamp(48px, 4vw, 50px);
+            }
         }
         .section-title,
         section h2.hero-title {
             color: #1a2b4b;
             font-weight: 800;
         }
-        h1.hero-title {
-            color: #1a2b4b;
-        }
         .hero-title {
             font-weight: 800;
+        }
+        h1.hero-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            min-width: 0;
+            max-width: 90vw;
+            margin: 0 auto clamp(20px, 2.5vw, 28px);
+            box-sizing: border-box;
+            font-weight: 600;
+            font-size: clamp(2rem, 7.5vw, 2.85rem);
+            line-height: 1.06;
+            letter-spacing: -0.025em;
+            padding-bottom: 6px;
+            overflow: visible;
+            background: linear-gradient(105deg, #1e3470 0%, #3f63d8 52%, #5a78dc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+        h1.hero-title .hero-title-line {
+            display: block;
+            line-height: inherit;
+            max-width: 100%;
+            overflow: visible;
+            color: inherit;
+        }
+        h1.hero-title .hero-title-line + .hero-title-line {
+            margin-top: 8px;
+        }
+        @media (min-width: 768px) {
+            h1.hero-title .hero-title-line + .hero-title-line {
+                margin-top: clamp(4px, 0.45vw, 6px);
+            }
+            h1.hero-title {
+                max-width: 760px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 0;
+                font-size: clamp(2.8rem, 3.4vw, 3.6rem);
+                line-height: 1.04;
+                letter-spacing: -0.03em;
+            }
+            h1.hero-title .hero-title-line {
+                line-height: 1.04;
+            }
         }
         h3 {
             font-weight: 700;
@@ -138,16 +224,46 @@
         }
         .flow-step-card[data-select-group] {
             border-radius: 14px;
-            transition: all 0.5s ease;
+            transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background-color 0.22s ease;
         }
         .flow-step-card[data-select-group]:hover,
         .flow-step-card[data-select-group].active-focus {
             border-color: var(--card-border-hover);
-            background: var(--card-bg-hover);
-            box-shadow: var(--card-shadow-hover);
+            background: rgba(255, 255, 255, 0.96);
+            box-shadow: 0 0 0 1px rgba(59, 108, 255, 0.14), 0 14px 30px rgba(0, 0, 0, 0.06);
             transform: translateY(-3px);
             z-index: 1;
             position: relative;
+        }
+        .selection-step-card.flow-step-card {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+        .selection-step-card.flow-step-card:hover,
+        .selection-step-card.flow-step-card.active-focus {
+            box-shadow: 0 0 0 1px rgba(59, 108, 255, 0.14), 0 6px 18px rgba(0, 0, 0, 0.08);
+        }
+        .option-label {
+            display: inline;
+            font-size: inherit;
+            font-weight: inherit;
+            line-height: inherit;
+        }
+        .option-label.option-1 {
+            color: rgba(74, 99, 201, 0.92);
+        }
+        .option-label.option-2 {
+            color: rgba(122, 111, 240, 0.92);
+        }
+        .option-title {
+            display: inline;
+            font-weight: inherit;
+            line-height: inherit;
+        }
+        .option-check.option-1 {
+            color: #4a63c9;
+        }
+        .option-check.option-2 {
+            color: #7a6ff0;
         }
         .flow-step-card[data-select-group="influencer"] h3 {
             color: #1a2b4b;
@@ -160,7 +276,9 @@
         }
         .flow-step-card[data-influencer-variant="selection"],
         .flow-step-card[data-influencer-variant="performance"] {
-            background: rgba(255, 255, 255, 0.42);
+            background: rgba(255, 255, 255, 0.96);
+            border-color: rgba(79, 110, 219, 0.12);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
         }
         .flow-step-card[data-influencer-variant="selection"] h3 svg,
         .flow-step-card[data-influencer-variant="performance"] h3 svg {
@@ -173,21 +291,90 @@
         .flow-step-card[data-influencer-variant="performance"]:hover,
         .flow-step-card[data-influencer-variant="performance"].active-focus {
             border-color: rgba(59, 108, 255, 0.4);
-            background: rgba(255, 255, 255, 0.62);
-            box-shadow: var(--card-shadow-hover);
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 0 0 1px rgba(59, 108, 255, 0.12), 0 10px 26px rgba(0, 0, 0, 0.07);
+        }
+
+        .option-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            height: auto;
+            min-height: auto;
+            padding: 2rem;
+        }
+        .option-card-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        .option-card-body {
+            min-width: 0;
+        }
+        .option-card-media {
+            width: 100%;
+            border-radius: 14px;
+            background: rgba(59, 108, 255, 0.06);
+            aspect-ratio: 3 / 2;
+            overflow: hidden;
+        }
+        @media (min-width: 768px) {
+            .option-card {
+                padding: 22px 22px 26px;
+                max-width: 520px;
+                width: 100%;
+                margin: 0 auto;
+            }
+            .option-card-layout {
+                gap: 12px;
+                align-items: center;
+            }
+            .option-card-body {
+                width: 100%;
+                max-width: 420px;
+            }
+            .option-card-media {
+                width: 100%;
+                max-width: 420px;
+                margin-top: 18px;
+            }
+        }
+        .option-card-body h3 {
+            font-size: clamp(1.15rem, 1.2vw, 1.45rem);
+            line-height: 1.25;
+        }
+        .option-card-body p {
+            font-size: clamp(0.92rem, 0.9vw, 1rem);
+            line-height: 1.65;
+        }
+        .option-card-body p {
+            max-width: 420px;
+        }
+        .influencer-section-title {
+            font-size: clamp(1.9rem, 2.1vw, 2.35rem);
+            line-height: 1.15;
+        }
+        @media (min-width: 768px) {
+            .option-cards-grid {
+                max-width: 1100px;
+                margin-left: auto;
+                margin-right: auto;
+                gap: 1.25rem;
+                justify-items: center;
+            }
         }
         .selection-step-card.flow-step-card .step-label {
             color: rgba(26, 43, 75, 0.52);
             text-shadow: none;
-            transition: all 0.5s ease;
+            transition: color 0.22s ease;
         }
         .selection-step-card.flow-step-card .step-icon {
             color: rgba(26, 43, 75, 0.52);
             filter: none;
-            transition: all 0.5s ease;
+            transition: color 0.22s ease;
         }
         .selection-step-card.flow-step-card .step-icon svg {
-            transition: all 0.5s ease;
+            transition: color 0.22s ease;
         }
         .selection-step-card.flow-step-card:hover .step-label,
         .selection-step-card.flow-step-card.active-focus .step-label {
@@ -202,7 +389,7 @@
         .flow-step-card[data-select-group]:focus-visible {
             outline: 2px solid rgba(59, 108, 255, 0.35);
             outline-offset: 2px;
-            transition: outline-color 0.5s ease;
+            transition: outline-color 0.22s ease;
         }
         @media (hover: hover) and (pointer: fine) {
             .flow-step-card[data-influencer-variant="selection"]:hover,
@@ -276,6 +463,80 @@
             box-shadow: none;
         }
 
+        .hero-lower-actions .btn-inquiry-gradient {
+            padding: 1.25rem 3rem;
+        }
+        @media (min-width: 768px) {
+            .hero-lower-actions .btn-inquiry-gradient {
+                padding: clamp(14px, 1.2vw, 16px) clamp(44px, 4vw, 56px);
+                min-width: clamp(170px, 12vw, 200px);
+            }
+        }
+
+        .services-section .service-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .services-section .service-card-inner {
+            width: 100%;
+            max-width: 26rem;
+        }
+        .services-section .service-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 8px 6px;
+            margin: clamp(20px, 2vw, 24px) 0 0;
+            padding-top: 2px;
+            width: 100%;
+            max-width: 26rem;
+        }
+        .services-section .service-tags span {
+            font-size: 0.75rem;
+            line-height: 1.25;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(79, 110, 219, 0.08);
+            color: #4a63c9;
+            border: 1px solid rgba(79, 110, 219, 0.1);
+        }
+        .services-section .service-tags.service-tags--event span {
+            padding: 4px 12px;
+        }
+        @media (min-width: 768px) {
+            .services-section .service-tags span {
+                font-size: 0.6875rem;
+            }
+        }
+
+        .services-section .service-card-inner h3 {
+            color: #162a4d;
+        }
+
+        .services-section .service-card-inner p {
+            color: #4a5c72;
+        }
+
+        .hero-subheadline {
+            max-width: min(42rem, 92vw);
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 0;
+            color: #4b5d73;
+        }
+        .hero-scroll-guide {
+            margin-top: clamp(40px, 4vw, 56px) !important;
+        }
+        @media (min-width: 768px) {
+            .hero-subheadline {
+                max-width: 500px;
+                margin-top: clamp(20px, 2vw, 24px);
+            }
+        }
+
         @media (max-width: 640px) {
             .nav-compact {
                 padding-top: 0.75rem !important;
@@ -284,7 +545,7 @@
             .nav-compact-contact {
                 padding: 0.375rem 1rem !important;
             }
-            .hero-title { font-size: 1.875rem !important; line-height: 1.3 !important; }
+            h2.hero-title { font-size: 1.875rem !important; line-height: 1.3 !important; }
             .section-padding { padding-top: 88px !important; padding-bottom: 88px !important; }
             .py-24 { padding-top: 8rem !important; padding-bottom: 8rem !important; }
             .py-40 { padding-top: 11.5rem !important; padding-bottom: 11.5rem !important; }
@@ -296,11 +557,14 @@
                 padding: 0.25rem 0.125rem;
             }
             .hero-scroll-guide {
-                margin-top: 5rem !important;
+                margin-top: clamp(40px, 10vw, 56px) !important;
             }
             .hero-content-balance {
                 padding-top: 3rem;
-                padding-bottom: 2.5rem;
+                padding-bottom: 0;
+            }
+            .hero-lower-actions {
+                margin-top: clamp(44px, 8vw, 60px);
             }
             .services-section {
                 padding-top: 2.5rem !important;
@@ -361,20 +625,25 @@
 <body>
 
     <nav class="fixed top-0 left-0 right-0 z-50 px-6 py-5 nav-compact glass text-[#1A2B4B]">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="w-full flex justify-start items-center">
             <div class="text-xl font-extrabold tracking-tighter text-[#1A2B4B]">PREBO</div>
         </div>
     </nav>
 
-    <section class="relative min-h-[90vh] flex flex-col items-center justify-center section-padding text-center pt-24 overflow-hidden">
-        <div class="relative z-10 max-w-7xl mx-auto px-6 w-full min-w-0 flex flex-col items-center justify-center hero-content-balance">
-            <span class="inline-block px-4 py-1.5 rounded-full border border-black/[0.08] bg-white/80 text-[10px] font-medium tracking-wider text-[#1A2B4B]/85 mb-8 uppercase shadow-sm">IT & Game Industry Specialist</span>
-            <h1 class="hero-title text-4xl md:text-7xl font-extrabold mb-8 tracking-tight text-[#1A2B4B]">반응이 일어나는 현장을 <br><span class="text-gradient">설계하고 실행합니다</span></h1>
-            <p class="text-sm md:text-xl text-[#1A2B4B]/85 mb-12 max-w-2xl mx-auto font-normal leading-relaxed">메시지는 더 멀리 전달되고, 영향은 더 넓게 확산됩니다 </p>
+    <section class="relative min-h-[90vh] flex flex-col items-center section-padding text-center pt-24 pb-10 md:pb-12 overflow-x-hidden">
+        <div class="relative z-10 max-w-7xl mx-auto px-6 w-full min-w-0 hero-content-balance">
+            <img src="images/prebo-logo.png" alt="PREBO logo" class="hero-logo" />
+            <h1 class="hero-title">
+                <span class="hero-title-line">Brand Activation</span>
+                <span class="hero-title-line">& Marketing Agency</span>
+            </h1>
+            <p class="hero-subheadline text-sm md:text-xl font-normal leading-relaxed">반응하는 현장을 설계하고 실행합니다 </p>
+        </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-6 w-full min-w-0 hero-lower-actions">
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="mailto:contact@prebo.kr?subject=[문의] PREBO 서비스 관련 문의드립니다&body=%0D%0A%0D%0A성함:%0D%0A연락처:%0D%0A문의내용:" class="btn-inquiry-gradient inline-block text-center w-full sm:w-auto px-12 py-5 rounded-full font-bold active:scale-95 transition-all">문의하기</a>
+                <a href="mailto:contact@prebo.kr?subject=[문의] PREBO 서비스 관련 문의드립니다&body=%0D%0A%0D%0A성함:%0D%0A연락처:%0D%0A문의내용:" class="btn-inquiry-gradient inline-block text-center w-full sm:w-auto rounded-full font-bold active:scale-95 transition-all">문의하기</a>
             </div>
-            <div class="mt-10 hero-scroll-guide flex flex-col items-center justify-center text-neutral-400 animate-bounce select-none">
+            <div class="hero-scroll-guide flex flex-col items-center justify-center text-neutral-400 animate-bounce select-none">
                 <i data-lucide="chevron-down" class="w-5 h-5"></i>
                 <span class="mt-1 text-[10px] tracking-[0.25em] uppercase">Scroll</span>
             </div>
@@ -383,33 +652,46 @@
 
     <section class="section-padding py-24 md:py-28 text-left services-section">
         <div class="max-w-7xl mx-auto px-6 w-full min-w-0">
-        <div class="mb-12 max-w-2xl section-intro services-intro">
-            <p class="section-eyebrow">Services</p>
-            <h2 class="section-intro-title section-title section-title-display text-3xl md:text-4xl font-extrabold tracking-tight text-[#1A2B4B] leading-tight">브랜드 확산 운영</h2>
+        <div class="mb-10 max-w-2xl section-intro services-intro">
+            <h2 class="section-intro-title section-title text-3xl md:text-4xl font-extrabold tracking-tight text-[#1A2B4B] leading-tight">Services</h2>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mobile-grid w-full min-w-0 text-left services-grid">
-            <div class="glass glass-card aos-card rounded-2xl p-10 min-w-0 w-full">
-                <i data-lucide="layers" class="text-[#3B6CFF] mb-6 w-8 h-8"></i>
-                <h3 class="text-2xl font-extrabold mb-4 text-[#1A2B4B]">Event Operation</h3>
-                <p class="text-sm text-[#1A2B4B]/85 mb-8 leading-relaxed">브랜드 경험을 기획부터 실행까지 통합 운영합니다. 단순한 행사를 넘어 가치를 설계합니다.</p>
-                <div class="flex flex-wrap gap-2 items-center">
-                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">기획</span>
-                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">섭외</span>
-                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">소싱</span>
-                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">실행</span>
-                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">결과</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mobile-grid w-full min-w-0 text-left services-grid">
+            <div class="glass glass-card aos-card service-card rounded-2xl min-w-0 w-full pt-7 px-8 pb-9 md:px-9">
+                <div class="service-card-inner">
+                    <h3 class="text-2xl font-extrabold mb-3.5 leading-snug">운영대행</h3>
+                    <p class="text-sm mb-0 leading-relaxed">브랜드 경험을 기획부터 실행까지 통합 운영합니다. 단순한 행사를 넘어 가치를 설계합니다.</p>
+                </div>
+                <div class="service-tags service-tags--event">
+                    <span>기획</span>
+                    <span>섭외</span>
+                    <span>소싱</span>
+                    <span>운영</span>
                 </div>
             </div>
-            <div class="glass glass-card aos-card rounded-2xl p-10 min-w-0 w-full">
-                <i data-lucide="zap" class="text-[#3B6CFF] mb-6 w-8 h-8"></i>
-                <h3 class="text-2xl font-extrabold mb-4 text-[#1A2B4B]">PR & Influencer</h3>
-                <p class="text-sm text-[#1A2B4B]/85 mb-8 leading-relaxed">언론과 뉴미디어를 연결해 메시지가 퍼지는 구조를 설계합니다. 효과적인 도달을 목표로 합니다.</p>
-                <div class="flex flex-wrap gap-2 items-center">
-                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">보도자료</span>
-                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">기획기사</span>
-                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">위기대응</span>
-                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">인플루언서 마케팅</span>
-                    <span class="px-3 py-1 rounded bg-black/[0.03] text-[10px] text-[#1A2B4B]/85 border border-black/[0.06]">공동구매</span>
+            <div class="glass glass-card aos-card service-card rounded-2xl min-w-0 w-full pt-7 px-8 pb-9 md:px-9">
+                <div class="service-card-inner">
+                    <h3 class="text-2xl font-extrabold mb-3.5 leading-snug">PR & Influencer</h3>
+                    <p class="text-sm mb-0 leading-relaxed">언론과 뉴미디어를 연결해 메시지가 퍼지는 구조를 설계합니다. 효과적인 도달을 목표로 합니다.</p>
+                </div>
+                <div class="service-tags">
+                    <span>보도자료</span>
+                    <span>기획기사</span>
+                    <span>위기대응</span>
+                    <span>인플루언서 마케팅</span>
+                    <span>공동구매</span>
+                </div>
+            </div>
+            <div class="glass glass-card aos-card service-card rounded-2xl min-w-0 w-full pt-7 px-8 pb-9 md:px-9">
+                <div class="service-card-inner">
+                    <h3 class="text-2xl font-extrabold mb-3.5 leading-snug">PR & Influencer</h3>
+                    <p class="text-sm mb-0 leading-relaxed">언론과 뉴미디어를 연결해 메시지가 퍼지는 구조를 설계합니다. 효과적인 도달을 목표로 합니다.</p>
+                </div>
+                <div class="service-tags">
+                    <span>보도자료</span>
+                    <span>기획기사</span>
+                    <span>위기대응</span>
+                    <span>인플루언서 마케팅</span>
+                    <span>공동구매</span>
                 </div>
             </div>
         </div>
@@ -419,16 +701,15 @@
     <section class="py-28 text-left">
         <div class="max-w-7xl mx-auto px-6 w-full min-w-0">
             <div class="mb-16 max-w-2xl section-intro">
-                <p class="section-eyebrow">Process</p>
+                <p class="section-eyebrow">운영대행</p>
                 <h2 class="section-intro-title section-title text-3xl md:text-4xl font-extrabold tracking-tight text-[#1A2B4B] leading-tight">원하는 시점에, <br class="md:hidden">필요한 만큼만</h2>
                 <p class="section-intro-desc text-sm md:text-base text-[#1A2B4B]/85 leading-relaxed">전체를 맡길 수도, 특정 단계만 선택할 수도 있습니다.<br class="md:hidden">유연한 실행을 지향합니다.</p>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 overflow-visible py-1 w-full min-w-0">
-                <div class="glass glass-card flow-step-card aos-card selection-step-card flex flex-col items-center justify-center gap-3 min-h-[108px] sm:min-h-[122px] md:min-h-[126px] px-6 py-10 md:py-11 cursor-pointer rounded-[14px] min-w-0 w-full active-focus" data-select-group="selection-flow" role="button" tabindex="0"><i data-lucide="layers" class="step-icon w-6 h-6 sm:w-7 sm:h-7 shrink-0" stroke-width="1.75"></i><span class="step-label text-xl sm:text-2xl font-bold tracking-tight text-center leading-snug">기획</span></div>
-                <div class="glass glass-card flow-step-card aos-card selection-step-card flex flex-col items-center justify-center gap-3 min-h-[108px] sm:min-h-[122px] md:min-h-[126px] px-6 py-10 md:py-11 cursor-pointer rounded-[14px] min-w-0 w-full" data-select-group="selection-flow" role="button" tabindex="0"><i data-lucide="users" class="step-icon w-6 h-6 sm:w-7 sm:h-7 shrink-0" stroke-width="1.75"></i><span class="step-label text-xl sm:text-2xl font-bold tracking-tight text-center leading-snug">섭외</span></div>
-                <div class="glass glass-card flow-step-card aos-card selection-step-card flex flex-col items-center justify-center gap-3 min-h-[108px] sm:min-h-[122px] md:min-h-[126px] px-6 py-10 md:py-11 cursor-pointer rounded-[14px] min-w-0 w-full" data-select-group="selection-flow" role="button" tabindex="0"><i data-lucide="target" class="step-icon w-6 h-6 sm:w-7 sm:h-7 shrink-0" stroke-width="1.75"></i><span class="step-label text-xl sm:text-2xl font-bold tracking-tight text-center leading-snug">소싱</span></div>
-                <div class="glass glass-card flow-step-card aos-card selection-step-card flex flex-col items-center justify-center gap-3 min-h-[108px] sm:min-h-[122px] md:min-h-[126px] px-6 py-10 md:py-11 cursor-pointer rounded-[14px] min-w-0 w-full" data-select-group="selection-flow" role="button" tabindex="0"><i data-lucide="zap" class="step-icon w-6 h-6 sm:w-7 sm:h-7 shrink-0" stroke-width="1.75"></i><span class="step-label text-xl sm:text-2xl font-bold tracking-tight text-center leading-snug">실행</span></div>
-                <div class="glass glass-card flow-step-card aos-card selection-step-card flex flex-col items-center justify-center gap-3 min-h-[108px] sm:min-h-[122px] md:min-h-[126px] px-6 py-10 md:py-11 cursor-pointer rounded-[14px] min-w-0 w-full" data-select-group="selection-flow" role="button" tabindex="0"><i data-lucide="bar-chart-3" class="step-icon w-6 h-6 sm:w-7 sm:h-7 shrink-0" stroke-width="1.75"></i><span class="step-label text-xl sm:text-2xl font-bold tracking-tight text-center leading-snug">결과</span></div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 overflow-visible py-1 w-full min-w-0">
+                <div class="glass glass-card flow-step-card aos-card selection-step-card flex flex-col items-center justify-center gap-3.5 min-h-[122px] sm:min-h-[136px] md:min-h-[142px] px-7 py-11 md:py-12 cursor-pointer rounded-[14px] min-w-0 w-full active-focus" data-select-group="selection-flow" role="button" tabindex="0"><i data-lucide="layers" class="step-icon w-6 h-6 sm:w-7 sm:h-7 shrink-0" stroke-width="1.75"></i><span class="step-label text-xl md:text-2xl font-bold tracking-tight text-center leading-snug">기획</span></div>
+                <div class="glass glass-card flow-step-card aos-card selection-step-card flex flex-col items-center justify-center gap-3.5 min-h-[122px] sm:min-h-[136px] md:min-h-[142px] px-7 py-11 md:py-12 cursor-pointer rounded-[14px] min-w-0 w-full" data-select-group="selection-flow" role="button" tabindex="0"><i data-lucide="users" class="step-icon w-6 h-6 sm:w-7 sm:h-7 shrink-0" stroke-width="1.75"></i><span class="step-label text-xl md:text-2xl font-bold tracking-tight text-center leading-snug">섭외</span></div>
+                <div class="glass glass-card flow-step-card aos-card selection-step-card flex flex-col items-center justify-center gap-3.5 min-h-[122px] sm:min-h-[136px] md:min-h-[142px] px-7 py-11 md:py-12 cursor-pointer rounded-[14px] min-w-0 w-full" data-select-group="selection-flow" role="button" tabindex="0"><i data-lucide="target" class="step-icon w-6 h-6 sm:w-7 sm:h-7 shrink-0" stroke-width="1.75"></i><span class="step-label text-xl md:text-2xl font-bold tracking-tight text-center leading-snug">소싱</span></div>
+                <div class="glass glass-card flow-step-card aos-card selection-step-card flex flex-col items-center justify-center gap-3.5 min-h-[122px] sm:min-h-[136px] md:min-h-[142px] px-7 py-11 md:py-12 cursor-pointer rounded-[14px] min-w-0 w-full" data-select-group="selection-flow" role="button" tabindex="0"><i data-lucide="zap" class="step-icon w-6 h-6 sm:w-7 sm:h-7 shrink-0" stroke-width="1.75"></i><span class="step-label text-xl md:text-2xl font-bold tracking-tight text-center leading-snug">운영</span></div>
             </div>
         </div>
     </section>
@@ -437,23 +718,33 @@
         <div class="max-w-7xl mx-auto px-6 w-full min-w-0">
             <div class="mb-12 max-w-2xl section-intro">
                 <p class="section-eyebrow">Influencer Marketing</p>
-                <h2 class="section-intro-title section-title text-3xl md:text-4xl font-extrabold tracking-tight text-[#1A2B4B] leading-tight">데이터로 증명하는 <br class="md:hidden">최적의 매칭 시스템</h2>
+                <h2 class="section-intro-title section-title text-3xl md:text-4xl font-extrabold tracking-tight text-[#1A2B4B] leading-tight influencer-section-title">데이터로 증명하는 <br class="md:hidden">최적의 매칭 시스템</h2>
                 <p class="section-intro-desc text-sm md:text-base text-[#1A2B4B]/85 leading-relaxed">목표에 따라 선택하세요. 단순 도달을 넘어 실질적인 전환을 이끌어냅니다.</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 w-full min-w-0 overflow-visible py-1">
-                <div class="glass glass-card flow-step-card aos-card p-8 md:p-12 cursor-pointer active-focus text-left min-w-0 w-full" data-select-group="influencer" data-influencer-variant="selection" role="button" tabindex="0">
-                    <h3 class="font-extrabold mb-2 md:text-2xl flex items-center gap-2">
-                        <i data-lucide="check-circle" class="w-5 h-5 shrink-0" stroke-width="1.75"></i>
-                        Option 1: Selection
-                    </h3>
-                    <p class="text-xs md:text-base leading-relaxed text-[#1A2B4B]/85">PREBO의 큐레이션 리스트에서 브랜드 페르소나와 일치하는 인플루언서를 직접 선택합니다.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 w-full min-w-0 overflow-visible py-1 option-cards-grid">
+                <div class="glass glass-card flow-step-card aos-card option-card cursor-pointer active-focus text-left min-w-0 w-full" data-select-group="influencer" data-influencer-variant="selection" role="button" tabindex="0">
+                    <div class="option-card-layout">
+                        <div class="option-card-body">
+                            <h3 class="font-bold mb-2 flex items-center gap-2">
+                                <i data-lucide="check-circle" class="option-check option-1 w-5 h-5 shrink-0" stroke-width="1.75"></i>
+                                <span><span class="option-label option-1">Option 1:</span> <span class="option-title">Selection</span></span>
+                            </h3>
+                            <p class="leading-relaxed text-[#1A2B4B]/85">PREBO의 큐레이션 리스트에서 브랜드 페르소나와 일치하는 인플루언서를 직접 선택합니다.</p>
+                        </div>
+                        <div class="option-card-media" aria-hidden="true"></div>
+                    </div>
                 </div>
-                <div class="glass glass-card flow-step-card aos-card p-8 md:p-12 cursor-pointer text-left min-w-0 w-full" data-select-group="influencer" data-influencer-variant="performance" role="button" tabindex="0">
-                    <h3 class="font-extrabold mb-2 md:text-2xl flex items-center gap-2">
-                        <i data-lucide="check-circle" class="w-5 h-5 shrink-0" stroke-width="1.75"></i>
-                        Option 2: Performance
-                    </h3>
-                    <p class="text-xs md:text-base leading-relaxed text-[#1A2B4B]/85">목표 노출 수치 도달을 최우선으로 하여 성과를 보장하는 운영 방식을 제안합니다.</p>
+                <div class="glass glass-card flow-step-card aos-card option-card cursor-pointer text-left min-w-0 w-full" data-select-group="influencer" data-influencer-variant="performance" role="button" tabindex="0">
+                    <div class="option-card-layout">
+                        <div class="option-card-body">
+                            <h3 class="font-bold mb-2 flex items-center gap-2">
+                                <i data-lucide="check-circle" class="option-check option-2 w-5 h-5 shrink-0" stroke-width="1.75"></i>
+                                <span><span class="option-label option-2">Option 2:</span> <span class="option-title">Performance</span></span>
+                            </h3>
+                            <p class="leading-relaxed text-[#1A2B4B]/85">목표 노출 수치 도달을 최우선으로 하여 성과를 보장하는 운영 방식을 제안합니다.</p>
+                        </div>
+                        <div class="option-card-media" aria-hidden="true"></div>
+                    </div>
                 </div>
             </div>
         </div>
