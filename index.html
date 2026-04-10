@@ -61,7 +61,7 @@
             background-size: cover;
             z-index: -1;
             pointer-events: none;
-            opacity: 0.6;
+            opacity: 0.7;
         }
         body > *:not(script) {
             position: relative;
@@ -94,22 +94,22 @@
             margin-top: var(--section-intro-stack-gap);
         }
         .hero-content-balance {
-            padding-top: 10rem;
+            padding-top: 7rem;
             flex: 1 1 auto;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 0;
-            transform: translateY(48px);
+            transform: translateY(-15px);
         }
         @media (min-width: 768px) {
             .hero-content-balance {
-                padding-top: clamp(8rem, 10vw, 12rem);
+                padding-top: clamp(5.75rem, 7.5vw, 8.5rem);
                 max-width: 720px;
                 margin-left: auto;
                 margin-right: auto;
-                transform: none;
+                transform: translateY(-15px);
             }
         }
         .hero-lower-actions {
@@ -118,7 +118,7 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
-            margin-top: clamp(48px, 5vw, 64px);
+            margin-top: clamp(40px, 4.5vw, 56px);
         }
         .hero-logo {
             display: block;
@@ -127,13 +127,13 @@
             height: auto;
             margin-left: auto;
             margin-right: auto;
-            margin-bottom: clamp(48px, 5vw, 64px);
+            margin-bottom: clamp(40px, 5vw, 56px);
         }
         @media (min-width: 768px) {
             .hero-logo {
                 width: clamp(340px, 24vw, 460px);
                 max-width: 42vw;
-                margin-bottom: clamp(48px, 4vw, 50px);
+                margin-bottom: clamp(42px, 4vw, 52px);
             }
         }
         .section-title,
@@ -318,25 +318,42 @@
             aspect-ratio: 3 / 2;
             overflow: hidden;
         }
+        /* Influencer option image (Option 1 only) */
+        .option-card[data-influencer-variant="selection"] .option-card-media {
+            background-image: url('images/option1.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        /* Influencer option image (Option 2 only) */
+        .option-card[data-influencer-variant="performance"] .option-card-media {
+            background-image: url('images/option2.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
         @media (min-width: 768px) {
             .option-card {
-                padding: 22px 22px 26px;
-                max-width: 520px;
+                padding: 24px 26px 28px;
                 width: 100%;
-                margin: 0 auto;
             }
             .option-card-layout {
-                gap: 12px;
+                gap: 1rem;
                 align-items: center;
             }
             .option-card-body {
-                width: 100%;
-                max-width: 420px;
+                width: 87.5%;
+                max-width: none;
+            }
+            .option-card .option-card-body p {
+                max-width: none;
             }
             .option-card-media {
-                width: 100%;
-                max-width: 420px;
-                margin-top: 18px;
+                width: 87.5%;
+                max-width: none;
+                height: auto;
+                margin: 0 auto;
+                aspect-ratio: 2 / 1;
             }
         }
         .option-card-body h3 {
@@ -356,11 +373,8 @@
         }
         @media (min-width: 768px) {
             .option-cards-grid {
-                max-width: 1100px;
-                margin-left: auto;
-                margin-right: auto;
                 gap: 1.25rem;
-                justify-items: center;
+                justify-items: stretch;
             }
         }
         .selection-step-card.flow-step-card .step-label {
@@ -408,7 +422,7 @@
                     0 18px var(--card-shadow-drop-blur) rgba(0, 0, 0, 0.072),
                     0 0 var(--card-shadow-glow-blur) rgba(59, 108, 255, 0.068);
             }
-            .case-study-card[data-case-scroll-focus]:hover {
+            .case-study-card[data-case-scroll-focus]:not(.case-portfolio):hover {
                 transform: scale(1.02);
             }
         }
@@ -417,22 +431,178 @@
                 background-color 0.35s ease;
         }
         .case-study-card.case-portfolio {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
             padding: 0;
             overflow: hidden;
             background: var(--card-glass-bg);
             border: 1px solid var(--card-border-idle);
             box-shadow: var(--card-soft-shadow);
         }
-        .case-study-card.case-portfolio.active-focus {
-            transform: scale(1.02);
-            border-color: var(--card-border-idle);
-            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
-            background-color: var(--card-glass-bg);
-            z-index: 2;
-            position: relative;
+        #case-studies-section .case-study-card.case-portfolio .case-study-visual {
+            width: 100%;
+            flex: 0 0 auto;
+        }
+        /* Partner logo strip (placeholders — swap in PNGs under .logo-item; see HTML comments) */
+        .logo-strip {
+            padding: 6rem 0 5.5rem;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.012) 0%, transparent 100%);
         }
         @media (min-width: 768px) {
-            .case-study-card[data-case-scroll-focus].active-focus {
+            .logo-strip {
+                padding: 7rem 0 6.5rem;
+            }
+        }
+        .logo-strip-viewport {
+            overflow: hidden;
+            margin-left: -0.25rem;
+            margin-right: -0.25rem;
+        }
+        .logo-strip-track {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: flex-start;
+            gap: clamp(1.75rem, 5vw, 3.5rem);
+            width: max-content;
+            will-change: transform;
+        }
+        .logo-strip-group {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            gap: clamp(1.75rem, 5vw, 3.5rem);
+        }
+        .logo-item {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 2rem;
+            min-width: 4.25rem;
+        }
+        @media (min-width: 768px) {
+            .logo-item {
+                min-height: 2.5rem;
+                min-width: 5rem;
+            }
+        }
+        .logo-item-placeholder {
+            box-sizing: border-box;
+            width: clamp(4.5rem, 14vw, 7rem);
+            height: clamp(1.5rem, 4vw, 2rem);
+            border-radius: 6px;
+            background: rgba(26, 43, 75, 0.05);
+            border: 1px dashed rgba(26, 43, 75, 0.12);
+        }
+        @media (min-width: 768px) {
+            .logo-item-placeholder {
+                width: clamp(5.5rem, 12vw, 8rem);
+                height: 2rem;
+            }
+        }
+        .logo-item img {
+            display: block;
+            height: 30px;
+            width: auto;
+            max-width: min(170px, 34vw);
+            object-fit: contain;
+            object-position: center;
+            opacity: 0.78;
+            transition: opacity 0.25s ease;
+        }
+        @media (min-width: 768px) {
+            .logo-item img {
+                height: 40px;
+                max-width: min(200px, 20vw);
+            }
+        }
+        .logo-item img:hover {
+            opacity: 1;
+        }
+        #case-studies-section .portfolio-grid {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: stretch;
+            gap: 20px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            cursor: grab;
+            padding: 10px 12px 12px;
+        }
+        #case-studies-section .portfolio-grid.is-dragging {
+            cursor: grabbing;
+            scroll-behavior: auto;
+            scroll-snap-type: none;
+        }
+        #case-studies-section .portfolio-grid.is-dragging,
+        #case-studies-section .portfolio-grid.is-dragging * {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        #case-studies-section .portfolio-grid img {
+            -webkit-user-drag: none;
+        }
+        #case-studies-section .portfolio-grid::-webkit-scrollbar {
+            display: none;
+        }
+        #case-studies-section .portfolio-grid > article.case-study-card.case-portfolio {
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+            min-width: 0;
+            opacity: 1;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.045);
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        #case-studies-section .portfolio-dots {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 9px;
+            margin-top: 24px;
+            padding: 0 4px;
+        }
+        #case-studies-section .portfolio-dot {
+            width: 9px;
+            height: 9px;
+            padding: 0;
+            border: none;
+            border-radius: 999px;
+            background: rgba(26, 43, 75, 0.22);
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: transform 0.3s ease, background 0.3s ease, opacity 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        #case-studies-section .portfolio-dot:hover {
+            background: rgba(26, 43, 75, 0.35);
+        }
+        #case-studies-section .portfolio-dot[aria-current="true"] {
+            background: #3b6cff;
+            transform: scale(1.06);
+        }
+        #case-studies-section .portfolio-dot:focus-visible {
+            outline: 2px solid rgba(59, 108, 255, 0.45);
+            outline-offset: 3px;
+        }
+        @media (max-width: 767px) {
+            #case-studies-section .portfolio-grid > article.case-study-card.case-portfolio {
+                width: 78%;
+            }
+        }
+        @media (min-width: 768px) {
+            #case-studies-section .portfolio-grid > article.case-study-card.case-portfolio {
+                width: 38.5%;
+            }
+            .case-study-card[data-case-scroll-focus]:not(.case-portfolio).active-focus {
                 transform: none;
                 border-color: var(--card-border-idle);
                 box-shadow: var(--card-soft-shadow);
@@ -471,6 +641,29 @@
                 padding: clamp(14px, 1.2vw, 16px) clamp(44px, 4vw, 56px);
                 min-width: clamp(170px, 12vw, 200px);
             }
+        }
+        /* Visual lift only (transform); layout box unchanged — CTA closer to subheadline */
+        .hero-lower-actions .btn-inquiry-gradient.hero-cta {
+            transform: translateY(calc(-1 * clamp(36px, 12vw, 64px)));
+            transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        @media (min-width: 768px) {
+            .hero-lower-actions .btn-inquiry-gradient.hero-cta {
+                transform: translateY(calc(-1 * clamp(64px, 11vw, 104px)));
+            }
+        }
+        .hero-lower-actions .btn-inquiry-gradient.hero-cta:active {
+            transform: translateY(calc(-1 * clamp(36px, 12vw, 64px))) scale(0.95);
+        }
+        @media (min-width: 768px) {
+            .hero-lower-actions .btn-inquiry-gradient.hero-cta:active {
+                transform: translateY(calc(-1 * clamp(64px, 11vw, 104px))) scale(0.95);
+            }
+        }
+        /* Scroll guide: scoped margin + translate (layout in hero-lower-actions only); inner keeps bounce */
+        .hero-lower-actions .hero-scroll-guide {
+            margin-top: clamp(22px, 3vw, 38px) !important;
+            transform: translateY(calc(-1 * clamp(16px, 3vw, 32px)));
         }
 
         .services-section .service-card {
@@ -528,7 +721,7 @@
             color: #4b5d73;
         }
         .hero-scroll-guide {
-            margin-top: clamp(40px, 4vw, 56px) !important;
+            margin-top: clamp(32px, 3.5vw, 48px) !important;
         }
         @media (min-width: 768px) {
             .hero-subheadline {
@@ -547,6 +740,10 @@
             }
             h2.hero-title { font-size: 1.875rem !important; line-height: 1.3 !important; }
             .section-padding { padding-top: 88px !important; padding-bottom: 88px !important; }
+            .hero-main.section-padding {
+                padding-top: 68px !important;
+                padding-bottom: 80px !important;
+            }
             .py-24 { padding-top: 8rem !important; padding-bottom: 8rem !important; }
             .py-40 { padding-top: 11.5rem !important; padding-bottom: 11.5rem !important; }
             .space-y-32 > * + * { margin-top: 7rem !important; }
@@ -557,17 +754,20 @@
                 padding: 0.25rem 0.125rem;
             }
             .hero-scroll-guide {
-                margin-top: clamp(40px, 10vw, 56px) !important;
+                margin-top: clamp(32px, 8vw, 48px) !important;
+            }
+            .hero-lower-actions .hero-scroll-guide {
+                margin-top: clamp(20px, 6vw, 36px) !important;
             }
             .hero-content-balance {
-                padding-top: 3rem;
+                padding-top: 2.5rem;
                 padding-bottom: 0;
             }
             .hero-lower-actions {
-                margin-top: clamp(44px, 8vw, 60px);
+                margin-top: clamp(40px, 7vw, 52px);
             }
             .services-section {
-                padding-top: 2.5rem !important;
+                padding-top: 5rem !important;
                 padding-bottom: 2rem !important;
             }
             .services-intro {
@@ -630,7 +830,7 @@
         </div>
     </nav>
 
-    <section class="relative min-h-[90vh] flex flex-col items-center section-padding text-center pt-24 pb-10 md:pb-12 overflow-x-hidden">
+    <section class="hero-main relative min-h-[108vh] flex flex-col items-center section-padding text-center pt-20 md:pt-[5.5rem] pb-20 md:pb-24 overflow-x-hidden">
         <div class="relative z-10 max-w-7xl mx-auto px-6 w-full min-w-0 hero-content-balance">
             <img src="images/prebo-logo.png" alt="PREBO logo" class="hero-logo" />
             <h1 class="hero-title">
@@ -641,11 +841,13 @@
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-6 w-full min-w-0 hero-lower-actions">
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="mailto:contact@prebo.kr?subject=[문의] PREBO 서비스 관련 문의드립니다&body=%0D%0A%0D%0A성함:%0D%0A연락처:%0D%0A문의내용:" class="btn-inquiry-gradient inline-block text-center w-full sm:w-auto rounded-full font-bold active:scale-95 transition-all">문의하기</a>
+                <a href="mailto:contact@prebo.kr?subject=[문의] PREBO 서비스 관련 문의드립니다&body=%0D%0A%0D%0A성함:%0D%0A연락처:%0D%0A문의내용:" class="btn-inquiry-gradient hero-cta inline-block text-center w-full sm:w-auto rounded-full font-bold transition-all">문의하기</a>
             </div>
-            <div class="hero-scroll-guide flex flex-col items-center justify-center text-neutral-400 animate-bounce select-none">
-                <i data-lucide="chevron-down" class="w-5 h-5"></i>
-                <span class="mt-1 text-[10px] tracking-[0.25em] uppercase">Scroll</span>
+            <div class="hero-scroll-guide flex flex-col items-center justify-center text-neutral-400 select-none">
+                <div class="hero-scroll-guide-inner flex flex-col items-center animate-bounce">
+                    <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                    <span class="mt-1 text-[10px] tracking-[0.25em] uppercase">Scroll</span>
+                </div>
             </div>
         </div>
     </section>
@@ -683,7 +885,7 @@
             </div>
             <div class="glass glass-card aos-card service-card rounded-2xl min-w-0 w-full pt-7 px-8 pb-9 md:px-9">
                 <div class="service-card-inner">
-                    <h3 class="text-2xl font-extrabold mb-3.5 leading-snug">PR & Influencer</h3>
+                    <h3 class="text-2xl font-extrabold mb-3.5 leading-snug">굿즈 제작 및 소싱</h3>
                     <p class="text-sm mb-0 leading-relaxed">언론과 뉴미디어를 연결해 메시지가 퍼지는 구조를 설계합니다. 효과적인 도달을 목표로 합니다.</p>
                 </div>
                 <div class="service-tags">
@@ -718,8 +920,8 @@
         <div class="max-w-7xl mx-auto px-6 w-full min-w-0">
             <div class="mb-12 max-w-2xl section-intro">
                 <p class="section-eyebrow">Influencer Marketing</p>
-                <h2 class="section-intro-title section-title text-3xl md:text-4xl font-extrabold tracking-tight text-[#1A2B4B] leading-tight influencer-section-title">데이터로 증명하는 <br class="md:hidden">최적의 매칭 시스템</h2>
-                <p class="section-intro-desc text-sm md:text-base text-[#1A2B4B]/85 leading-relaxed">목표에 따라 선택하세요. 단순 도달을 넘어 실질적인 전환을 이끌어냅니다.</p>
+                <h2 class="section-intro-title section-title text-3xl md:text-4xl font-extrabold tracking-tight text-[#1A2B4B] leading-tight influencer-section-title">목표에 따라 <br class="md:hidden">선택하세요</h2>
+                <p class="section-intro-desc text-sm md:text-base text-[#1A2B4B]/85 leading-relaxed">단순 도달을 넘어 실질적인 전환을 이끌어냅니다.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 w-full min-w-0 overflow-visible py-1 option-cards-grid">
                 <div class="glass glass-card flow-step-card aos-card option-card cursor-pointer active-focus text-left min-w-0 w-full" data-select-group="influencer" data-influencer-variant="selection" role="button" tabindex="0">
@@ -750,7 +952,7 @@
         </div>
     </section>
 
-    <section class="py-28 overflow-hidden text-left">
+    <section class="pt-28 pb-36 md:pt-28 md:pb-44 overflow-hidden text-left">
         <div class="max-w-7xl mx-auto px-6 w-full min-w-0">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 md:items-start w-full min-w-0">
             <div class="w-full min-w-0 section-intro md:col-span-2">
@@ -767,68 +969,119 @@
                 <h3 class="section-title section-title-display text-3xl md:text-5xl font-extrabold tracking-tight mb-5 break-keep text-[#1A2B4B]"><span class="text-[#3B6CFF]">‘연결’</span> 방식이</span><span class="block">다릅니다</span></h3>
                 <div class="space-y-[1px]">
                     <p class="text-sm md:text-xl text-[#1A2B4B]/85 leading-relaxed md:leading-relaxed">현직 아나운서 및 언론·뉴미디어 전문가의 시각으로</p>
-                    <p class="text-sm md:text-xl text-[#1A2B4B]/85 leading-relaxed md:leading-relaxed">브랜드에 가장 적합한 매체와 채널을 정교하게 매칭합니다.</p>
+                    <p class="text-sm md:text-xl text-[#1A2B4B]/85 leading-relaxed md:leading-relaxed">브랜드의 목적에 가장 적합한 매체와 채널을을</p>
+                    <p class="text-sm md:text-xl text-[#1A2B4B]/85 leading-relaxed md:leading-relaxed">정교하게 매칭합니다.</p>
                 </div>
             </div>
             </div>
         </div>
     </section>
 
-    <section class="py-24 md:py-28 text-left" id="case-studies-section">
+    <section class="logo-strip text-left" id="logo-strip-section" aria-labelledby="logo-strip-heading">
+        <div class="max-w-7xl mx-auto px-6 w-full min-w-0">
+            <h2 id="logo-strip-heading" class="sr-only">Partner logos</h2>
+            <div class="logo-strip-viewport" aria-hidden="true">
+                <div class="logo-strip-track" id="logo-strip-track">
+                    <div class="logo-strip-group">
+                        <div class="logo-item">
+                            <!-- PNG: images/SKT_logo.png -->
+                            <img src="images/SKT_logo.png" alt="SKT" loading="lazy" decoding="async" width="200" height="60" />
+                        </div>
+                        <div class="logo-item">
+                            <!-- PNG: images/하나은행_logo.png -->
+                            <img src="images/하나은행_logo.png" alt="하나은행" loading="lazy" decoding="async" width="200" height="60" />
+                        </div>
+                        <div class="logo-item">
+                            <!-- PNG: images/SBA_logo.png -->
+                            <img src="images/SBA_logo.png" alt="SBA" loading="lazy" decoding="async" width="200" height="60" />
+                        </div>
+                        <div class="logo-item">
+                            <!-- PNG: images/111%_logo.png -->
+                            <img src="images/111%_logo.png" alt="111%" loading="lazy" decoding="async" width="200" height="60" />
+                        </div>
+                        <div class="logo-item">
+                            <!-- PNG: images/서울과기대_logo.png -->
+                            <img src="images/서울과기대_logo.png" alt="서울과학기술대학교" loading="lazy" decoding="async" width="220" height="60" />
+                        </div>
+                    </div>
+                    <div class="logo-strip-group">
+                        <div class="logo-item">
+                            <img src="images/SKT_logo.png" alt="SKT" loading="lazy" decoding="async" width="200" height="60" />
+                        </div>
+                        <div class="logo-item">
+                            <img src="images/하나은행_logo.png" alt="하나은행" loading="lazy" decoding="async" width="200" height="60" />
+                        </div>
+                        <div class="logo-item">
+                            <img src="images/SBA_logo.png" alt="SBA" loading="lazy" decoding="async" width="200" height="60" />
+                        </div>
+                        <div class="logo-item">
+                            <img src="images/111%_logo.png" alt="111%" loading="lazy" decoding="async" width="200" height="60" />
+                        </div>
+                        <div class="logo-item">
+                            <img src="images/서울과기대_logo.png" alt="서울과학기술대학교" loading="lazy" decoding="async" width="220" height="60" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pt-28 pb-24 md:pt-36 md:pb-28 text-left" id="case-studies-section">
         <div class="max-w-7xl mx-auto px-6 w-full min-w-0">
         <h2 class="section-title section-title-display text-3xl md:text-4xl font-extrabold tracking-tight mb-3 text-[#1A2B4B]">Portfolio</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mobile-grid w-full min-w-0 overflow-visible py-2 px-1 text-left">
-            <article class="glass-card aos-card case-study-card case-portfolio flex flex-col sm:flex-row rounded-xl min-w-0 w-full" data-case-scroll-focus>
-                <div class="case-study-visual relative w-full min-w-0 sm:w-[44%] sm:min-w-[44%] aspect-[16/10] overflow-hidden shrink-0">
+        <div class="portfolio-grid w-full min-w-0 py-2 px-1 text-left">
+            <article class="glass-card aos-card case-study-card case-portfolio flex flex-col rounded-xl min-w-0 w-full" data-case-scroll-focus>
+                <div class="case-study-visual relative w-full min-w-0 aspect-[16/10] overflow-hidden shrink-0 rounded-t-xl">
                     <img src="images/슈퍼패스트배치설명회.png" alt="슈퍼패스트 배치 설명회" class="absolute inset-0 h-full w-full object-cover" width="640" height="400" loading="lazy" decoding="async">
                 </div>
-                <div class="flex flex-col justify-center flex-1 gap-3 p-5 sm:p-6 sm:pl-5">
+                <div class="flex flex-col justify-start flex-1 gap-3 p-5 sm:p-6">
                     <h4 class="text-[10px] text-[#3B6CFF] uppercase tracking-[0.2em] font-medium">BTL/행사운영</h4>
                     <h3 class="text-base md:text-lg font-extrabold text-[#1A2B4B] leading-snug tracking-tight">111%</h3>
                     <p class="text-[13px] text-[#1A2B4B]/85 leading-relaxed line-clamp-2">슈퍼패스트 배치 설명회</p>
                 </div>
             </article>
-            <article class="glass-card aos-card case-study-card case-portfolio flex flex-col sm:flex-row rounded-xl min-w-0 w-full" data-case-scroll-focus>
-                <div class="case-study-visual relative w-full min-w-0 sm:w-[44%] sm:min-w-[44%] aspect-[16/10] overflow-hidden shrink-0">
+            <article class="glass-card aos-card case-study-card case-portfolio flex flex-col rounded-xl min-w-0 w-full" data-case-scroll-focus>
+                <div class="case-study-visual relative w-full min-w-0 aspect-[16/10] overflow-hidden shrink-0 rounded-t-xl">
                     <img src="images/AI 데모데이.png" alt="AI 데모데이" class="absolute inset-0 h-full w-full object-cover" width="640" height="400" loading="lazy" decoding="async">
                 </div>
-                <div class="flex flex-col justify-center flex-1 gap-3 p-5 sm:p-6 sm:pl-5">
+                <div class="flex flex-col justify-start flex-1 gap-3 p-5 sm:p-6">
                     <h4 class="text-[10px] text-[#3B6CFF] uppercase tracking-[0.2em] font-medium">BTL/행사운영</h4>
-                    <h3 class="text-base md:text-lg font-extrabold text-[#1A2B4B] leading-snug tracking-tight">SKT × 하나은행</h3>
-                    <p class="text-[13px] text-[#1A2B4B]/85 leading-relaxed line-clamp-2">AI 데모데이 총괄 (1·2기)</p>
+                    <h3 class="text-base md:text-lg font-extrabold text-[#1A2B4B] leading-snug tracking-tight">SKT × SBA</h3>
+                    <p class="text-[13px] text-[#1A2B4B]/85 leading-relaxed line-clamp-2">S.O.A ESG 분과 컨퍼런스</p>
                 </div>
             </article>
-            <article class="glass-card aos-card case-study-card case-portfolio flex flex-col sm:flex-row rounded-xl min-w-0 w-full" data-case-scroll-focus>
-                <div class="case-study-visual relative w-full min-w-0 sm:w-[44%] sm:min-w-[44%] aspect-[16/10] overflow-hidden shrink-0">
+            <article class="glass-card aos-card case-study-card case-portfolio flex flex-col rounded-xl min-w-0 w-full" data-case-scroll-focus>
+                <div class="case-study-visual relative w-full min-w-0 aspect-[16/10] overflow-hidden shrink-0 rounded-t-xl">
                     <img src="images/헬로타운.jpg" alt="헬로타운 캠페인" class="absolute inset-0 h-full w-full object-cover object-center md:object-right" width="640" height="400" loading="lazy" decoding="async">
                 </div>
-                <div class="flex flex-col justify-center flex-1 gap-3 p-5 sm:p-6 sm:pl-5">
+                <div class="flex flex-col justify-start flex-1 gap-3 p-5 sm:p-6">
                     <h4 class="text-[10px] text-[#3B6CFF] uppercase tracking-[0.2em] font-medium">Influencer Marketing </h4>
                     <h3 class="text-base md:text-lg font-extrabold text-[#1A2B4B] leading-snug tracking-tight">스프링컴즈</h3>
-                    <p class="text-[13px] text-[#1A2B4B]/85 leading-relaxed line-clamp-2">헬로타운 x 이디야 인스타그램 광고</p>
+                    <p class="text-[13px] text-[#1A2B4B]/85 leading-relaxed line-clamp-2">헬로타운 x 위니비니니 인스타그램 광고</p>
                 </div>
             </article>
-            <article class="glass-card aos-card case-study-card case-portfolio flex flex-col sm:flex-row rounded-xl min-w-0 w-full" data-case-scroll-focus>
-                <div class="case-study-visual relative w-full min-w-0 sm:w-[44%] sm:min-w-[44%] aspect-[16/10] overflow-hidden shrink-0">
+            <article class="glass-card aos-card case-study-card case-portfolio flex flex-col rounded-xl min-w-0 w-full" data-case-scroll-focus>
+                <div class="case-study-visual relative w-full min-w-0 aspect-[16/10] overflow-hidden shrink-0 rounded-t-xl">
                     <img src="images/헬로타운2.jpg" alt="헬롤타운 언론PR" class="absolute inset-0 h-full w-full object-cover" width="640" height="400" loading="lazy" decoding="async">
                 </div>
-                <div class="flex flex-col justify-center flex-1 gap-3 p-5 sm:p-6 sm:pl-5">
+                <div class="flex flex-col justify-start flex-1 gap-3 p-5 sm:p-6">
                     <h4 class="text-[10px] text-[#3B6CFF] uppercase tracking-[0.2em] font-medium">언론 PR </h4>
                     <h3 class="text-base md:text-lg font-extrabold text-[#1A2B4B] leading-snug tracking-tight">스프링컴즈</h3>
                     <p class="text-[12px] text-[#1A2B4B]/85 leading-relaxed line-clamp-2">헬로타운x위니비니 보도자료 배포</p>
                 </div>
             </article>
-            <article class="glass-card aos-card case-study-card case-portfolio flex flex-col sm:flex-row rounded-xl min-w-0 w-full" data-case-scroll-focus>
-                <div class="case-study-visual relative w-full min-w-0 sm:w-[44%] sm:min-w-[44%] aspect-[16/10] overflow-hidden shrink-0">
+            <article class="glass-card aos-card case-study-card case-portfolio flex flex-col rounded-xl min-w-0 w-full" data-case-scroll-focus>
+                <div class="case-study-visual relative w-full min-w-0 aspect-[16/10] overflow-hidden shrink-0 rounded-t-xl">
                     <img src="images/AI 데모데이.png" alt="AI 데모데이" class="absolute inset-0 h-full w-full object-cover" width="640" height="400" loading="lazy" decoding="async">
                 </div>
-                <div class="flex flex-col justify-center flex-1 gap-3 p-5 sm:p-6 sm:pl-5">
+                <div class="flex flex-col justify-start flex-1 gap-3 p-5 sm:p-6">
                     <h4 class="text-[10px] text-[#3B6CFF] uppercase tracking-[0.2em] font-medium">추가예정</h4>
                     <h3 class="text-base md:text-lg font-extrabold text-[#1A2B4B] leading-snug tracking-tight">추가예정</h3>
                     <p class="text-[13px] text-[#1A2B4B]/85 leading-relaxed line-clamp-2">추가예정 </p>
                 </div>
             </article>
         </div>
+        <div class="portfolio-dots" id="portfolio-dots" role="tablist" aria-label="Portfolio projects"></div>
         </div>
     </section>
 
@@ -849,7 +1102,7 @@
 
     <section class="py-44 text-center">
         <div class="max-w-7xl mx-auto px-6 w-full min-w-0">
-            <h2 class="hero-title text-3xl md:text-5xl font-extrabold mb-10 break-keep text-[#1A2B4B]">가장 효율적인 방식으로<br>비즈니스를 실행하세요</h2>
+            <h2 class="hero-title text-3xl md:text-5xl font-extrabold mb-10 break-keep text-[#1A2B4B]">최고의 파트너와<br>함께하세요</h2>
             <a href="mailto:contact@prebo.kr?subject=[문의] PREBO 서비스 관련 문의드립니다&body=%0D%0A%0D%0A성함:%0D%0A연락처:%0D%0A문의내용:" class="btn-inquiry-gradient inline-block text-center px-12 py-5 rounded-full font-bold active:scale-95 transition-all">지금 문의하기</a>
         </div>
     </section>
@@ -904,65 +1157,220 @@
             initSelectGroup('selection-flow');
             initSelectGroup('influencer');
 
-            var caseStudyCards = document.querySelectorAll('[data-case-scroll-focus]');
-            var caseStudyRoot = document.getElementById('case-studies-section');
-            var mobileFocusMedia = window.matchMedia('(max-width: 767px)');
-            var caseZoneActive = false;
-            var caseRafId = 0;
+            var portfolioGrid = document.querySelector('#case-studies-section .portfolio-grid');
+            if (portfolioGrid) {
+                var portfolioPointerDown = false;
+                var portfolioDragging = false;
+                var portfolioStartClientX = 0;
+                var portfolioStartScrollLeft = 0;
+                var portfolioDragThreshold = 5;
 
-            function updateCaseStudyCenterFocus() {
-                if (!mobileFocusMedia.matches || !caseZoneActive || !caseStudyCards.length) return;
-                var centerY = window.innerHeight / 2;
-                var best = null;
-                var bestDist = Infinity;
-                caseStudyCards.forEach(function (card) {
-                    var r = card.getBoundingClientRect();
-                    if (r.bottom < 0 || r.top > window.innerHeight) return;
-                    var cy = r.top + r.height / 2;
-                    var d = Math.abs(cy - centerY);
-                    if (d < bestDist) {
-                        bestDist = d;
-                        best = card;
+                function endPortfolioDrag() {
+                    if (portfolioDragging) {
+                        portfolioGrid.classList.remove('is-dragging');
+                    }
+                    portfolioPointerDown = false;
+                    portfolioDragging = false;
+                }
+
+                portfolioGrid.addEventListener('mousedown', function (e) {
+                    if (e.button !== 0) return;
+                    if (e.target.closest('a, button, input, textarea, select, [role="button"]')) return;
+                    portfolioPointerDown = true;
+                    portfolioDragging = false;
+                    portfolioStartClientX = e.clientX;
+                    portfolioStartScrollLeft = portfolioGrid.scrollLeft;
+                });
+
+                window.addEventListener(
+                    'mousemove',
+                    function (e) {
+                        if (!portfolioPointerDown) return;
+                        var dx = e.clientX - portfolioStartClientX;
+                        if (!portfolioDragging) {
+                            if (Math.abs(dx) < portfolioDragThreshold) return;
+                            portfolioDragging = true;
+                            portfolioGrid.classList.add('is-dragging');
+                        }
+                        e.preventDefault();
+                        portfolioGrid.scrollLeft = portfolioStartScrollLeft - dx;
+                    },
+                    { passive: false }
+                );
+
+                window.addEventListener('mouseup', endPortfolioDrag);
+                portfolioGrid.addEventListener('mouseleave', function () {
+                    if (portfolioPointerDown && !portfolioDragging) {
+                        portfolioPointerDown = false;
                     }
                 });
-                caseStudyCards.forEach(function (card) {
-                    card.classList.toggle('active-focus', card === best);
+                portfolioGrid.addEventListener('dragstart', function (e) {
+                    e.preventDefault();
                 });
-            }
 
-            function scheduleCaseStudyFocus() {
-                if (!mobileFocusMedia.matches || !caseZoneActive) return;
-                cancelAnimationFrame(caseRafId);
-                caseRafId = requestAnimationFrame(updateCaseStudyCenterFocus);
-            }
+                var portfolioCards = portfolioGrid.querySelectorAll('article.case-study-card.case-portfolio');
+                var portfolioDotsRoot = document.getElementById('portfolio-dots');
+                var portfolioFocusRaf = 0;
 
-            if (caseStudyRoot && caseStudyCards.length) {
-                var caseZoneObserver = new IntersectionObserver(
-                    function (entries) {
-                        var e = entries[0];
-                        caseZoneActive = mobileFocusMedia.matches && e && e.isIntersecting;
-                        if (!caseZoneActive) {
-                            caseStudyCards.forEach(function (c) {
-                                c.classList.remove('active-focus');
-                            });
-                        } else {
-                            scheduleCaseStudyFocus();
-                        }
-                    },
-                    { root: null, threshold: 0, rootMargin: '8% 0px 8% 0px' }
-                );
-                caseZoneObserver.observe(caseStudyRoot);
-                mobileFocusMedia.addEventListener('change', function () {
-                    caseZoneActive = false;
-                    caseStudyCards.forEach(function (c) {
-                        c.classList.remove('active-focus');
+                function updatePortfolioActiveDot() {
+                    if (!portfolioCards.length) return;
+                    var bestIdx = -1;
+                    var sl = portfolioGrid.scrollLeft;
+                    var sw = portfolioGrid.scrollWidth;
+                    var maxScroll = Math.max(0, sw - portfolioGrid.clientWidth);
+                    var edgePx = 32;
+                    var threshold = Math.min(edgePx, Math.max(20, maxScroll * 0.04));
+
+                    if (maxScroll <= threshold * 2) {
+                        bestIdx = 0;
+                    } else if (sl <= threshold) {
+                        bestIdx = 0;
+                    } else if (sl >= maxScroll - threshold) {
+                        bestIdx = portfolioCards.length - 1;
+                    } else {
+                        var gr = portfolioGrid.getBoundingClientRect();
+                        var mid = gr.left + gr.width / 2;
+                        var bestDist = Infinity;
+                        portfolioCards.forEach(function (card, i) {
+                            var r = card.getBoundingClientRect();
+                            var cx = r.left + r.width / 2;
+                            var d = Math.abs(cx - mid);
+                            if (d < bestDist) {
+                                bestDist = d;
+                                bestIdx = i;
+                            }
+                        });
+                    }
+                    if (portfolioDotsRoot) {
+                        var btns = portfolioDotsRoot.querySelectorAll('.portfolio-dot');
+                        btns.forEach(function (btn, i) {
+                            var on = i === bestIdx;
+                            btn.setAttribute('aria-current', on ? 'true' : 'false');
+                            btn.setAttribute('tabindex', on ? '0' : '-1');
+                        });
+                    }
+                }
+
+                function schedulePortfolioActiveDot() {
+                    cancelAnimationFrame(portfolioFocusRaf);
+                    portfolioFocusRaf = requestAnimationFrame(updatePortfolioActiveDot);
+                }
+
+                function scrollPortfolioCardToCenter(index) {
+                    var card = portfolioCards[index];
+                    if (!card) return;
+                    var maxScroll = Math.max(0, portfolioGrid.scrollWidth - portfolioGrid.clientWidth);
+                    if (index === 0) {
+                        portfolioGrid.scrollTo({ left: 0, behavior: 'smooth' });
+                        return;
+                    }
+                    if (index === portfolioCards.length - 1) {
+                        portfolioGrid.scrollTo({ left: maxScroll, behavior: 'smooth' });
+                        return;
+                    }
+                    var gr = portfolioGrid.getBoundingClientRect();
+                    var cr = card.getBoundingClientRect();
+                    var delta = cr.left + cr.width / 2 - (gr.left + gr.width / 2);
+                    var next = portfolioGrid.scrollLeft + delta;
+                    portfolioGrid.scrollTo({ left: Math.max(0, Math.min(next, maxScroll)), behavior: 'smooth' });
+                }
+
+                if (portfolioDotsRoot && portfolioCards.length) {
+                    portfolioDotsRoot.innerHTML = '';
+                    portfolioCards.forEach(function (_, i) {
+                        var btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.className = 'portfolio-dot';
+                        btn.setAttribute('role', 'tab');
+                        btn.setAttribute('aria-label', 'Portfolio item ' + (i + 1));
+                        btn.setAttribute('tabindex', i === 0 ? '0' : '-1');
+                        btn.addEventListener('click', function () {
+                            scrollPortfolioCardToCenter(i);
+                        });
+                        portfolioDotsRoot.appendChild(btn);
                     });
-                    scheduleCaseStudyFocus();
-                });
+                }
 
-                window.addEventListener('scroll', scheduleCaseStudyFocus, { passive: true });
-                window.addEventListener('resize', scheduleCaseStudyFocus, { passive: true });
-                scheduleCaseStudyFocus();
+                portfolioGrid.addEventListener('scroll', schedulePortfolioActiveDot, { passive: true });
+                window.addEventListener('resize', schedulePortfolioActiveDot, { passive: true });
+                window.addEventListener('scroll', schedulePortfolioActiveDot, { passive: true });
+                schedulePortfolioActiveDot();
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(schedulePortfolioActiveDot);
+                });
+            }
+
+            var logoStripTrack = document.getElementById('logo-strip-track');
+            if (logoStripTrack) {
+                var logoStripSection = document.getElementById('logo-strip-section');
+                var logoStripCur = 0;
+                var logoStripTgt = 0;
+                var logoStripRaf = 0;
+                var logoStripReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+                function logoStripLimits() {
+                    var narrow = window.matchMedia('(max-width: 767px)').matches;
+                    return {
+                        maxPx: narrow ? 120 : 170,
+                        sensitivity: narrow ? 2.15 : 1.75,
+                        lerp: narrow ? 0.38 : 0.28
+                    };
+                }
+
+                function logoStripComputeTarget() {
+                    if (logoStripReduceMotion.matches) {
+                        logoStripTgt = 0;
+                        return;
+                    }
+                    if (!logoStripSection) {
+                        logoStripTgt = 0;
+                        return;
+                    }
+                    var r = logoStripSection.getBoundingClientRect();
+                    var vh = window.innerHeight || document.documentElement.clientHeight || 0;
+                    var total = vh + r.height;
+                    if (total <= 0) {
+                        logoStripTgt = 0;
+                        return;
+                    }
+                    // progress: 0 when section is just below viewport, 1 when it's fully past top
+                    var progress = (vh - r.top) / total;
+                    if (progress < 0) progress = 0;
+                    if (progress > 1) progress = 1;
+                    var L = logoStripLimits();
+                    var p = progress * L.sensitivity;
+                    if (p < 0) p = 0;
+                    if (p > 1) p = 1;
+                    logoStripTgt = -L.maxPx * p;
+                }
+
+                function logoStripAnimate() {
+                    var L = logoStripLimits();
+                    logoStripCur += (logoStripTgt - logoStripCur) * L.lerp;
+                    if (Math.abs(logoStripTgt - logoStripCur) < 0.06) {
+                        logoStripCur = logoStripTgt;
+                    }
+                    logoStripTrack.style.transform = 'translate3d(' + logoStripCur + 'px, 0, 0)';
+                    if (Math.abs(logoStripTgt - logoStripCur) > 0.06) {
+                        logoStripRaf = requestAnimationFrame(logoStripAnimate);
+                    } else {
+                        logoStripRaf = 0;
+                    }
+                }
+
+                function onLogoStripScroll() {
+                    logoStripComputeTarget();
+                    if (!logoStripRaf) {
+                        logoStripRaf = requestAnimationFrame(logoStripAnimate);
+                    }
+                }
+
+                window.addEventListener('scroll', onLogoStripScroll, { passive: true });
+                window.addEventListener('resize', onLogoStripScroll, { passive: true });
+                logoStripReduceMotion.addEventListener('change', onLogoStripScroll);
+                logoStripComputeTarget();
+                logoStripCur = logoStripTgt;
+                logoStripTrack.style.transform = 'translate3d(' + logoStripCur + 'px, 0, 0)';
             }
         })();
     </script>
